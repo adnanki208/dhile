@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25">
-  <g id="Group_48216" data-name="Group 48216" transform="translate(-5855 2516)">
-    <rect id="Path" width="25" height="25" transform="translate(5855 -2516)" fill="rgba(255,255,255,0)"/>
-    <path id="bookmark-Filled_1_" d="M463.125,2488.187v13.54a1.562,1.562,0,0,1-2.453,1.284l-5.066-3.507a.519.519,0,0,0-.593,0l-5.061,3.507a1.563,1.563,0,0,1-2.452-1.284v-13.54a4.693,4.693,0,0,1,4.688-4.687h6.25A4.693,4.693,0,0,1,463.125,2488.187Z" transform="translate(5412.188 -4996.896)" fill="#e2b92c"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="25.433" height="25.433" viewBox="0 0 25.433 25.433">
+  <g id="Group_48232" data-name="Group 48232" transform="translate(4744.211 -4344.199)">
+    <rect id="Path" width="25" height="25" transform="matrix(1, 0.017, -0.017, 1, -4743.775, 4344.199)" fill="rgba(255,255,255,0)"/>
+    <path id="bookmark-Filled_1_" d="M463.125,2488.187v13.54a1.562,1.562,0,0,1-2.453,1.284l-5.066-3.507a.519.519,0,0,0-.593,0l-5.061,3.507a1.563,1.563,0,0,1-2.452-1.284v-13.54a4.693,4.693,0,0,1,4.688-4.687h6.25A4.693,4.693,0,0,1,463.125,2488.187Z" transform="matrix(1, 0.017, -0.017, 1, -5143.222, 1855.953)" fill="#fbc100"/>
   </g>
 </svg>
