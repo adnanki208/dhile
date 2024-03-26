@@ -59,13 +59,13 @@ class AppBarCustom extends StatelessWidget  implements PreferredSizeWidget{
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Icon(Icons.calendar_month_outlined,size: 20,color:  homeController.rentType.value == 'daily'
-                                        ? Colors.white
+                                        ? Colors.black
                                         : Colors.grey),
                                     const SizedBox(width: 5,),
                                     Text('daily'.tr,
                                         style: TextStyle(
                                           color: homeController.rentType.value == 'daily'
-                                              ? Colors.white
+                                              ? Colors.black
                                               : Colors.grey,
                                           fontSize: 16
                                         ),
@@ -97,13 +97,13 @@ class AppBarCustom extends StatelessWidget  implements PreferredSizeWidget{
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Icon(Icons.calendar_month_outlined,size: 20,color:  homeController.rentType.value == 'monthly'
-                                        ? Colors.white
+                                        ? Colors.black
                                         : Colors.grey),
                                     const SizedBox(width: 5,),
                                     Text('monthly'.tr,
                                         style: TextStyle(
                                             color: homeController.rentType.value == 'monthly'
-                                                ? Colors.white
+                                                ? Colors.black
                                                 : Colors.grey,
                                             fontSize: 16
                                         ),
@@ -382,7 +382,7 @@ class AppBarCustom extends StatelessWidget  implements PreferredSizeWidget{
                     ),
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 5.0),
-                      child:  Text('Filter'.tr,style: const TextStyle(color: Colors.white,fontSize: 20)),
+                      child:  Text('Filter'.tr,style: const TextStyle(color: Colors.black,fontSize: 20)),
                     )
                   ),
                 ),
@@ -428,7 +428,7 @@ class AppBarCustom extends StatelessWidget  implements PreferredSizeWidget{
                   child: Hero(
                     tag: 'logo',
                     child: SvgPicture.asset('assets/imgs/logo.svg',
-                        width: (Get.width * 0.2) <= 100 ? Get.width * 0.2: 200),
+                        width: (Get.width * 0.18) <= 100 ? Get.width * 0.18: 200),
                   ),
                 )),
             if(showFilter==true)

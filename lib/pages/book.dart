@@ -3,10 +3,7 @@ import 'package:dhile/constant.dart';
 import 'package:dhile/controller/book_controller.dart';
 import 'package:dhile/models/home.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -161,7 +158,7 @@ class _BookPageState extends State<BookPage> {
                                       padding:
                                       const EdgeInsets.symmetric(vertical: 10),
                                       decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                                          borderRadius: const BorderRadius.all(Radius.circular(10)),
                                           color: bookController.bookModel.value
                                               .rentalType ==
                                               'daily'
@@ -171,13 +168,13 @@ class _BookPageState extends State<BookPage> {
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
                                           Icon(Icons.calendar_month_outlined,size: 20,color:  bookController.bookModel.value.rentalType == 'daily'
-                                              ? Colors.white
+                                              ? Colors.black
                                               : Colors.grey),
                                           const SizedBox(width: 5,),
                                           Text('daily'.tr,
                                               style: TextStyle(
                                                   color:bookController.bookModel.value.rentalType  == 'daily'
-                                                      ? Colors.white
+                                                      ? Colors.black
                                                       : Colors.grey,
                                                   fontSize: 16
                                               ),
@@ -211,13 +208,13 @@ class _BookPageState extends State<BookPage> {
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
                                             Icon(Icons.calendar_month_outlined,size: 20,color:  bookController.bookModel.value.rentalType == 'monthly'
-                                                ? Colors.white
+                                                ? Colors.black
                                                 : Colors.grey),
-                                            SizedBox(width: 5,),
+                                            const SizedBox(width: 5,),
                                             Text('monthly'.tr,
                                                 style: TextStyle(
                                                     color:bookController.bookModel.value.rentalType  == 'monthly'
-                                                        ? Colors.white
+                                                        ? Colors.black
                                                         : Colors.grey,
                                                     fontSize: 16
                                                 ),
@@ -377,7 +374,6 @@ class _BookPageState extends State<BookPage> {
                                     textInputAction:
                                     TextInputAction.done ,
                                     initialCountryCode:'AE',
-
                                    searchText: 'Search'.tr,
                                    pickerDialogStyle: PickerDialogStyle(backgroundColor: Colors.white,),
                                    languageCode: Get.locale.toString().substring(0,2),
@@ -444,7 +440,7 @@ class _BookPageState extends State<BookPage> {
                           )
                               : Padding(
                             padding: const EdgeInsets.only(bottom: 15.0,top: 10),
-                            child: Text('Confirmation'.tr,style: const TextStyle(color: Colors.white,fontSize: 18),
+                            child: Text('Confirmation'.tr,style: const TextStyle(color: Colors.black,fontSize: 18),
                             ),
                           )),
                     ),

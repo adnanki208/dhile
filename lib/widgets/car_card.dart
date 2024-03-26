@@ -663,7 +663,7 @@ class CarCard extends StatelessWidget {
                                             .tr,
                                         style: const TextStyle(
                                             color: Colors
-                                                .white,
+                                                .black,
                                             fontSize: 15),
                                       )
                                     ],

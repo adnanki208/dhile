@@ -793,7 +793,7 @@ class _CarDetailsPageState extends State<CarDetailsPage> {
                     padding: const EdgeInsets.only(bottom: 15.0, top: 10),
                     child: Text(
                       'Book This Car'.tr,
-                      style: const TextStyle(color: Colors.white, fontSize: 18),
+                      style: const TextStyle(color: Colors.black, fontSize: 18),
                     ),
                   )),
             ),
