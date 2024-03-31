@@ -403,12 +403,10 @@ class AppBarCustom extends StatelessWidget  implements PreferredSizeWidget{
   @override
   Widget build(BuildContext context) {
     return AppBar(
-
       scrolledUnderElevation: 0,
       toolbarHeight: 80,
       backgroundColor: Colors.white,
       elevation: 0,
-
       shape: Border(
           bottom: BorderSide(
               color: Constant.bgColor!,

@@ -1,8 +1,9 @@
+import 'dart:io';
+
 import 'package:dhile/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'dart:io' show Platform;
 
 class BottomNav extends StatelessWidget {
   const BottomNav({super.key, required this.index});

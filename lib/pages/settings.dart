@@ -218,49 +218,51 @@ class _SettingsPageState extends State<SettingsPage> {
                                         localLang.toString().substring(0, 2));
                                     settingsController.getSocial();
                                   },
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            'Language'.tr,
-                                            style: TextStyle(
-                                                color: Constant.iconColor,
-                                                fontSize: 22),
-                                          ),
-                                          FaIcon(
-                                            Get.locale
-                                                .toString()
-                                                .substring(0, 2) !=
-                                                'ar'
-                                                ? FontAwesomeIcons.angleRight
-                                                : FontAwesomeIcons.angleLeft,
-                                            size: 18,
-                                          )
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: 3,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            'lang'.tr,
-                                            style: const TextStyle(
-                                                color: Colors.grey),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: 15,
-                                      ),
-                                      const Divider(
-                                        height: 1,
-                                      ),
-                                    ],
+                                  child: AbsorbPointer(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              'Language'.tr,
+                                              style: TextStyle(
+                                                  color: Constant.iconColor,
+                                                  fontSize: 22),
+                                            ),
+                                            FaIcon(
+                                              Get.locale
+                                                  .toString()
+                                                  .substring(0, 2) !=
+                                                  'ar'
+                                                  ? FontAwesomeIcons.angleRight
+                                                  : FontAwesomeIcons.angleLeft,
+                                              size: 18,
+                                            )
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 3,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              'lang'.tr,
+                                              style: const TextStyle(
+                                                  color: Colors.grey),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 15,
+                                        ),
+                                        const Divider(
+                                          height: 1,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(
@@ -271,16 +273,60 @@ class _SettingsPageState extends State<SettingsPage> {
                                     onTap: () async {
                                       launchUrlString(phone!);
                                     },
+                                    child: AbsorbPointer(
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment
+                                            .center,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                'Call Us'.tr,
+                                                style: TextStyle(
+                                                    color: Constant.iconColor,
+                                                    fontSize: 22),
+                                              ),
+                                              FaIcon(
+                                                Get.locale
+                                                    .toString()
+                                                    .substring(0, 2) !=
+                                                    'ar'
+                                                    ? FontAwesomeIcons.angleRight
+                                                    : FontAwesomeIcons.angleLeft,
+                                                size: 18,
+                                              )
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 20,
+                                          ),
+                                          const Divider(
+                                            height: 1,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                if (phone != null)
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                GestureDetector(
+                                  onTap: () async {
+                                    launchUrlString('${Constant.domain}terms');
+                                  },
+                                  child: AbsorbPointer(
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment
-                                          .center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Row(
                                           mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              'Call Us'.tr,
+                                              'Terms'.tr,
                                               style: TextStyle(
                                                   color: Constant.iconColor,
                                                   fontSize: 22),
@@ -305,46 +351,6 @@ class _SettingsPageState extends State<SettingsPage> {
                                       ],
                                     ),
                                   ),
-                                if (phone != null)
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                GestureDetector(
-                                  onTap: () async {
-                                    launchUrlString('${Constant.domain}terms');
-                                  },
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            'Terms'.tr,
-                                            style: TextStyle(
-                                                color: Constant.iconColor,
-                                                fontSize: 22),
-                                          ),
-                                          FaIcon(
-                                            Get.locale
-                                                .toString()
-                                                .substring(0, 2) !=
-                                                'ar'
-                                                ? FontAwesomeIcons.angleRight
-                                                : FontAwesomeIcons.angleLeft,
-                                            size: 18,
-                                          )
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: 20,
-                                      ),
-                                      const Divider(
-                                        height: 1,
-                                      ),
-                                    ],
-                                  ),
                                 ),
                                 const SizedBox(
                                   height: 20,
@@ -354,38 +360,40 @@ class _SettingsPageState extends State<SettingsPage> {
                                     onTap: () async {
                                       launchUrlString(whats!);
                                     },
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment
-                                          .center,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              'Chat On Whatsapp'.tr,
-                                              style: TextStyle(
-                                                  color: Constant.iconColor,
-                                                  fontSize: 22),
-                                            ),
-                                            FaIcon(
-                                              Get.locale
-                                                  .toString()
-                                                  .substring(0, 2) !=
-                                                  'ar'
-                                                  ? FontAwesomeIcons.angleRight
-                                                  : FontAwesomeIcons.angleLeft,
-                                              size: 18,
-                                            )
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 20,
-                                        ),
-                                        const Divider(
-                                          height: 1,
-                                        ),
-                                      ],
+                                    child: AbsorbPointer(
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment
+                                            .center,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                'Chat On Whatsapp'.tr,
+                                                style: TextStyle(
+                                                    color: Constant.iconColor,
+                                                    fontSize: 22),
+                                              ),
+                                              FaIcon(
+                                                Get.locale
+                                                    .toString()
+                                                    .substring(0, 2) !=
+                                                    'ar'
+                                                    ? FontAwesomeIcons.angleRight
+                                                    : FontAwesomeIcons.angleLeft,
+                                                size: 18,
+                                              )
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 20,
+                                          ),
+                                          const Divider(
+                                            height: 1,
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 if (whats != null)
