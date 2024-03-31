@@ -12,7 +12,7 @@ class BottomNav extends StatelessWidget {
   Widget build(BuildContext context) {
     // this.index;
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 5),
+      padding: const EdgeInsets.only(top: 5, bottom: 10),
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [

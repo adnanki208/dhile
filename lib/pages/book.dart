@@ -421,7 +421,7 @@ class _BookPageState extends State<BookPage> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
+                padding: const EdgeInsets.only(left: 5,right: 5,bottom: 15),
                 child: Row(
                   children: [
                     Expanded(
