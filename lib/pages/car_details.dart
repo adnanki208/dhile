@@ -15,6 +15,7 @@ import 'package:readmore/readmore.dart';
 import 'package:html/parser.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:dhile/widgets/car_card.dart';
+import 'dart:io' show Platform;
 
 class HexColor extends Color {
   static int _getColorFromHex(String hexColor) {
@@ -776,7 +777,7 @@ class _CarDetailsPageState extends State<CarDetailsPage> {
             width: MediaQuery.of(context).size.width,
             child: Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
+                   EdgeInsets.only(right: 15.0, left: 15,top: 5,bottom: Platform.isIOS ? 25:15.0),
               child: ElevatedButton(
                   style: ButtonStyle(
                       backgroundColor:
@@ -790,7 +791,7 @@ class _CarDetailsPageState extends State<CarDetailsPage> {
                     Get.toNamed('/book', arguments: [widget.car]);
                   },
                   child: Padding(
-                    padding: const EdgeInsets.only(bottom: 15.0, top: 10),
+                    padding: const EdgeInsets.only(bottom:  15.0, top: 10),
                     child: Text(
                       'Book This Car'.tr,
                       style: const TextStyle(color: Colors.black, fontSize: 18),

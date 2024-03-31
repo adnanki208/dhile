@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl_phone_field/country_picker_dialog.dart';
+import 'dart:io' show Platform;
 
 class BookPage extends StatefulWidget {
   final Car car;
@@ -421,7 +422,7 @@ class _BookPageState extends State<BookPage> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 5,right: 5,bottom: 15),
+                padding:  EdgeInsets.only(left: 5,right: 5,bottom: Platform.isIOS ? 25:15),
                 child: Row(
                   children: [
                     Expanded(

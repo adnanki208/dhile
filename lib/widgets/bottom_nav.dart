@@ -2,6 +2,7 @@ import 'package:dhile/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'dart:io' show Platform;
 
 class BottomNav extends StatelessWidget {
   const BottomNav({super.key, required this.index});
@@ -12,7 +13,7 @@ class BottomNav extends StatelessWidget {
   Widget build(BuildContext context) {
     // this.index;
     return Container(
-      padding: const EdgeInsets.only(top: 5, bottom: 10),
+      padding:  EdgeInsets.only(top: 5, bottom: Platform.isIOS? 20:10),
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [

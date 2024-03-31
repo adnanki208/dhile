@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'dart:io' show Platform;
 
 class AppBarCustom extends StatelessWidget  implements PreferredSizeWidget{
   const AppBarCustom({
@@ -404,7 +405,7 @@ class AppBarCustom extends StatelessWidget  implements PreferredSizeWidget{
     return AppBar(
 
       scrolledUnderElevation: 0,
-      toolbarHeight: 100,
+      toolbarHeight: 80,
       backgroundColor: Colors.white,
       elevation: 0,
 
@@ -416,7 +417,7 @@ class AppBarCustom extends StatelessWidget  implements PreferredSizeWidget{
       ),
       title:Center(
         child: Row(
-          mainAxisAlignment:showFilter==true?MainAxisAlignment.spaceBetween :MainAxisAlignment.spaceAround,
+          mainAxisAlignment:showFilter==true?MainAxisAlignment.spaceBetween :MainAxisAlignment.center,
           children: [
             SizedBox(
 
@@ -480,5 +481,5 @@ class AppBarCustom extends StatelessWidget  implements PreferredSizeWidget{
     );
   }
   @override
-  Size get preferredSize => const Size.fromHeight(100);
+  Size get preferredSize => const Size.fromHeight(80);
 }
