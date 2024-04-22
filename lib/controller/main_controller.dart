@@ -13,11 +13,11 @@ class MainController extends GetxController{
 Future<void> responseCheck(response,fn) async {
 
   if (response.code == -500) {
-
-    await Future.delayed(const Duration(seconds: 3),() {
-      fn();
-    },);
-
+if(fn != null) {
+  await Future.delayed(const Duration(seconds: 3), () {
+    fn();
+  },);
+}
     //
 
 

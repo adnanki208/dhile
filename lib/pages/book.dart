@@ -3,7 +3,9 @@ import 'package:dhile/constant.dart';
 import 'package:dhile/controller/book_controller.dart';
 import 'package:dhile/models/home.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -15,42 +17,50 @@ class BookPage extends StatefulWidget {
 
   const BookPage({super.key, required this.car});
 
-
   @override
   State<BookPage> createState() => _BookPageState();
-
-
 }
 
 class _BookPageState extends State<BookPage> {
-
   BookController bookController = Get.put(BookController());
-  FocusNode phoneFocus=FocusNode();
-  FocusNode emailFocus=FocusNode();
+  FocusNode phoneFocus = FocusNode();
+  FocusNode emailFocus = FocusNode();
+  FocusNode nameFocus = FocusNode();
 
   @override
   void initState() {
     super.initState();
-   Timer(const Duration(microseconds: 100),() {
-     bookController.formKey.currentState!.reset();
-   },);
-
+    bookController.calculate.update((val) {
+      val?.carId = widget.car.id;
+    });
+    bookController.end(
+        bookController.start.value.add(Duration(days: widget.car.minDays)));
+    bookController.calc();
+    Timer(
+      const Duration(microseconds: 100),
+      () {
+        bookController.formKey.currentState!.reset();
+      },
+    );
+    bookController.area();
   }
-@override
+
+  @override
   void dispose() {
     phoneFocus.dispose();
     emailFocus.dispose();
+    nameFocus.dispose();
     super.dispose();
-
   }
+
   @override
   Widget build(BuildContext context) {
-
-
-
-    bookController.bookModel.update((val) {
-      val?.carId=widget.car.id;
-    },);
+    bookController.bookModel.update(
+      (val) {
+        val?.carId = widget.car.id;
+      },
+    );
+    bookController.minDays(widget.car.minDays);
 
     Future<void> dateRange() async {
       DateTimeRange? newDate = await showDateRangePicker(
@@ -69,12 +79,10 @@ class _BookPageState extends State<BookPage> {
                   rangePickerHeaderForegroundColor: Colors.white,
 
                   dayStyle: const TextStyle(color: Colors.white),
-                  dayOverlayColor:
-                  const MaterialStatePropertyAll(Colors.white),
+                  dayOverlayColor: const MaterialStatePropertyAll(Colors.white),
                 ),
                 // colorScheme: ColorScheme.mainColor(primary: const Color(0xFF8CE7F1)),
                 colorScheme: ColorScheme.light(
-
                   secondary: Constant.bgColor!,
                   primary: Constant.mainColor!,
 
@@ -102,32 +110,42 @@ class _BookPageState extends State<BookPage> {
       if (newDate != null) {
         bookController.start(newDate.start);
         bookController.end(newDate.end);
+        var days = newDate.end.difference(newDate.start).inDays;
+        if (days < widget.car.minDays) {
+          bookController.isInRange(false);
+        } else {
+          bookController.isInRange(true);
+
+          bookController.calc();
+        }
       }
     }
-
-
 
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
           scrolledUnderElevation: 0,
           backgroundColor: Colors.white,
-          title: Text('Your Information'.tr,style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold,color: Constant.iconColor)),
+          title: Text('Your Information'.tr,
+              style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Constant.iconColor)),
           centerTitle: true,
           actions: [
             GestureDetector(
-              onTap: (){
+              onTap: () {
                 bookController.formKey.currentState?.reset();
                 bookController.bookReset();
-                },
+              },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                child: SvgPicture.asset('assets/imgs/trush.svg',
+                child: SvgPicture.asset(
+                  'assets/imgs/trush.svg',
                 ),
               ),
             )
           ],
-
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
@@ -135,250 +153,636 @@ class _BookPageState extends State<BookPage> {
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  child: Obx((){
+                  child: Obx(() {
                     return Form(
                       key: bookController.formKey,
                       child: Column(
                         children: [
                           const SizedBox(
-                            height: 45,
+                            height: 15,
                           ),
-                
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Expanded(
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      bookController.bookModel.update((val) {
-                                        val?.rentalType = 'daily';
-                                      });
-                
-                                    },
-                                    child: Container(
-                                      padding:
-                                      const EdgeInsets.symmetric(vertical: 10),
-                                      decoration: BoxDecoration(
-                                          borderRadius: const BorderRadius.all(Radius.circular(10)),
-                                          color: bookController.bookModel.value
-                                              .rentalType ==
-                                              'daily'
-                                              ? Constant.mainColor
-                                              : Constant.bgColor),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Icon(Icons.calendar_month_outlined,size: 20,color:  bookController.bookModel.value.rentalType == 'daily'
-                                              ? Colors.black
-                                              : Colors.grey),
-                                          const SizedBox(width: 5,),
-                                          Text('daily'.tr,
-                                              style: TextStyle(
-                                                  color:bookController.bookModel.value.rentalType  == 'daily'
-                                                      ? Colors.black
-                                                      : Colors.grey,
-                                                  fontSize: 16
-                                              ),
-                                              textAlign: TextAlign.center),
-                                        ],
-                                      ),
-                                    ),
-                                  )),
-                              if (widget.car.monthlyPrice != null)
-                                const SizedBox(width: 8,),
-                              if (widget.car.monthlyPrice != null)
-                                Expanded(
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        bookController.bookModel.update((val) {
-                                          val?.rentalType = 'monthly';
-                                        });
-                
-                                      },
-                                      child: Container(
-                                        padding:
-                                        const EdgeInsets.symmetric(vertical: 10),
-                                        decoration: BoxDecoration(
-                                            borderRadius: const BorderRadius.all(Radius.circular(10)),
-                                            color: bookController.bookModel.value
-                                                .rentalType ==
-                                                'monthly'
-                                                ? Constant.mainColor
-                                                : Constant.bgColor),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Icon(Icons.calendar_month_outlined,size: 20,color:  bookController.bookModel.value.rentalType == 'monthly'
-                                                ? Colors.black
-                                                : Colors.grey),
-                                            const SizedBox(width: 5,),
-                                            Text('monthly'.tr,
-                                                style: TextStyle(
-                                                    color:bookController.bookModel.value.rentalType  == 'monthly'
-                                                        ? Colors.black
-                                                        : Colors.grey,
-                                                    fontSize: 16
-                                                ),
-                                                textAlign: TextAlign.center),
-                                          ],
-                                        ),
-                                      ),
-                                    )),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 25,
-                          ),
+
                           Row(
                             children: [
                               Text(
                                 'Pickup & Drop Off Date'.tr,
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
-                                    color: Constant.iconColor, fontSize: 18,fontWeight: FontWeight.bold),
+                                    color: Constant.iconColor,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
                               ),
                             ],
                           ),
                           Container(
-                            margin: const EdgeInsets.symmetric(vertical: 15),
+                            margin: const EdgeInsets.only(top: 15),
                             decoration: BoxDecoration(
                                 color: Constant.bgColor,
-                                borderRadius: const BorderRadius.all(Radius.circular(10))
-                            ),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(10))),
                             width: MediaQuery.of(context).size.width,
-                
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 TextButton(
-                                    onPressed: dateRange,
+                                    onPressed: () {
+                                      bookController.total('');
+                                      bookController.subTotal('');
+                                      bookController.vat('');
+                                      bookController.discount('');
+                                      dateRange();
+                                    },
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
                                           '${bookController.start.value.day}/${bookController.start.value.month}/${bookController.start.value.year} - ${bookController.end.value.day}/${bookController.end.value.month}/${bookController.end.value.year}',
                                           style: TextStyle(
-                                              color: Constant
-                                                  .iconColor),
+                                              color: Constant.iconColor),
                                         ),
-                                        const Icon(Icons.calendar_month_outlined,size: 20,color:Colors.grey),
+                                        const Icon(
+                                            Icons.calendar_month_outlined,
+                                            size: 20,
+                                            color: Colors.grey),
                                       ],
                                     ))
                               ],
                             ),
                           ),
+                          if (bookController.isInRange.value == false)
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12.0),
+                                  child: Text(
+                                    '${'Minimum_days_For_Rant_Most_Be'.tr} ${widget.car.minDays}',
+                                    style: const TextStyle(
+                                        color: Color(0xffB53228)),
+                                    textAlign: TextAlign.start,
+                                  ),
+                                ),
+                              ],
+                            ),
                           const SizedBox(
-                            height: 10,
+                            height: 20,
                           ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Text(
+                                          'Pick Up Location'.tr,
+                                          textAlign: TextAlign.start,
+                                          style: TextStyle(
+                                              color: Constant.iconColor,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Transform.scale(
+                                          scale: 1,
+                                          child: Radio(
+                                            fillColor: MaterialStatePropertyAll(
+                                                bookController.calculate.value
+                                                            .pick ==
+                                                        0
+                                                    ? Constant.mainColor
+                                                    : Constant.dark),
+                                            value: 0,
+                                            groupValue: bookController
+                                                .calculate.value.pick,
+                                            onChanged: (value) {
+                                              bookController.calculate
+                                                  .update((val) {
+                                                val?.pick = value;
+                                              });
+                                              bookController.calc();
+                                            },
+                                          ),
+                                        ),
+                                        Text('Self'.tr)
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Transform.scale(
+                                          scale: 1,
+                                          child: Radio(
+                                            fillColor: MaterialStatePropertyAll(
+                                                bookController.calculate.value
+                                                            .pick ==
+                                                        1
+                                                    ? Constant.mainColor
+                                                    : Constant.dark),
+                                            value: 1,
+                                            groupValue: bookController
+                                                .calculate.value.pick,
+                                            onChanged: (value) {
+                                              bookController.calculate
+                                                  .update((val) {
+                                                val?.pick = value;
+                                              });
+                                                          
+                                              bookController.calc();
+                                            },
+                                          ),
+                                        ),
+                                        Text('Deliver'.tr)
+                                      ],
+                                    ),
+                                    if(bookController.isAreaReady.value == true && bookController.calculate.value.pick==1 )
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Flexible(
+                                            child: Padding(
+                                              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                                              child: DropdownButtonFormField(
+                                                dropdownColor: Constant.bgGrayColor,
+                                                decoration: InputDecoration(
+                                                  focusedBorder:  UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color: Constant.mainColor!
+                                                    ),),
+                                                ),
+                                                              isExpanded: true,
+                                                value: bookController.calculate.value.areaPick ?? bookController
+                                                    .areaModel.value!.area[0].id,
+                                                onChanged: (value) {
+                                                  bookController.calculate
+                                                      .update((val) {
+                                                    val?.areaPick = value;
+                                                  });
+                                                  bookController.calc();
+
+                                                },
+                                                items: bookController
+                                                    .areaModel.value!.area
+                                                    .map((data) => DropdownMenuItem(
+                                                    value: data.id,
+                                                    child: Text(data.name)))
+                                                    .toList(),
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      )
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Drop Off Location'.tr,
+                                          textAlign: TextAlign.start,
+                                          style: TextStyle(
+                                              color: Constant.iconColor,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Transform.scale(
+                                          scale: 1,
+                                          child: Radio(
+                                            fillColor: MaterialStatePropertyAll(
+                                                bookController.calculate.value
+                                                            .drop ==
+                                                        0
+                                                    ? Constant.mainColor
+                                                    : Constant.dark),
+                                            value: 0,
+                                            groupValue: bookController
+                                                .calculate.value.drop,
+                                            onChanged: (value) {
+                                              bookController.calculate
+                                                  .update((val) {
+                                                val?.drop = value;
+                                              });
+                                              bookController.calc();
+                                            },
+                                          ),
+                                        ),
+                                        Text('Self'.tr)
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Transform.scale(
+                                          scale: 1,
+                                          child: Radio(
+                                            fillColor: MaterialStatePropertyAll(
+                                                bookController.calculate.value
+                                                            .drop ==
+                                                        1
+                                                    ? Constant.mainColor
+                                                    : Constant.dark),
+                                            value: 1,
+                                            groupValue: bookController
+                                                .calculate.value.drop,
+                                            onChanged: (value) {
+                                              bookController.calculate
+                                                  .update((val) {
+                                                val?.drop = value;
+                                              });
+                                              bookController.calc();
+                                            },
+                                          ),
+                                        ),
+                                        Text('Deliver'.tr)
+                                      ],
+                                    ),
+
+                                    if(bookController.isAreaReady.value == true && bookController.calculate.value.drop==1 )
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Flexible(
+                                            child: Padding(
+                                              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                                              child: DropdownButtonFormField(
+
+                                                dropdownColor: Constant.bgGrayColor,
+                                                decoration: InputDecoration(
+                                                  focusedBorder:  UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color: Constant.mainColor!
+                                                    ),),
+                                                ),
+
+                                                isExpanded: true,
+                                                value: bookController.calculate.value.areaDrop ?? bookController
+                                                    .areaModel.value!.area[0].id,
+                                                onChanged: (value) {
+                                                  bookController.calculate
+                                                      .update((val) {
+                                                    val?.areaDrop = value;
+                                                  });
+                                                  bookController.calc();
+
+                                                },
+                                                items: bookController
+                                                    .areaModel.value!.area
+                                                    .map((data) => DropdownMenuItem(
+                                                    value: data.id,
+                                                    child: Text(data.name)))
+                                                    .toList(),
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      )
+                                  ],
+
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    'PaymentMethod'.tr,
+                                    textAlign: TextAlign.start,
+                                    style: TextStyle(
+                                        color: Constant.iconColor,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Transform.scale(
+                                    scale: 1,
+                                    child: Radio(
+                                      fillColor: MaterialStatePropertyAll(
+                                          bookController.bookModel.value
+                                                      .rentalType ==
+                                                  0
+                                              ? Constant.mainColor
+                                              : Constant.dark),
+                                      value: 0,
+                                      groupValue: bookController
+                                          .bookModel.value.rentalType,
+                                      onChanged: (value) {
+                                        bookController.bookModel.update((val) {
+                                          val?.rentalType = value;
+                                        });
+                                        // bookController.calc();
+                                      },
+                                    ),
+                                  ),
+                                  Text('PayLater'.tr)
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Transform.scale(
+                                    scale: 1,
+                                    child: Radio(
+                                      fillColor: MaterialStatePropertyAll(
+                                          bookController.bookModel.value
+                                                      .rentalType ==
+                                                  1
+                                              ? Constant.mainColor
+                                              : Constant.dark),
+                                      value: 1,
+                                      groupValue: bookController
+                                          .bookModel.value.rentalType,
+                                      onChanged: (value) {
+                                        bookController.bookModel.update((val) {
+                                          val?.rentalType = value;
+                                        });
+                                        // bookController.calc();
+                                      },
+                                    ),
+                                  ),
+                                  Text('PayNow'.tr)
+                                ],
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+
                           Container(
                             decoration: BoxDecoration(
                                 color: Constant.bgGrayColor,
-                                borderRadius: const BorderRadius.all(Radius.circular(10))
-                            ),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(10))),
                             width: MediaQuery.of(context).size.width,
                             padding: const EdgeInsets.all(10),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const SizedBox(height: 10,),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'SubTotal'.tr,
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                          color: Constant.iconColor,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      bookController.subTotal.value,
+                                      style: TextStyle(
+                                          color: Constant.iconColor,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Discount'.tr,
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                          color: Constant.iconColor,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      bookController.discount.value,
+                                      style: TextStyle(
+                                          color: Constant.iconColor,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Vat'.tr,
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                          color: Constant.iconColor,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      bookController.vat.value,
+                                      style: TextStyle(
+                                          color: Constant.iconColor,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                const Divider(
+                                  color: Colors.grey,
+                                  height: 2,
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Total'.tr,
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                          color: Constant.iconColor,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      bookController.total.value,
+                                      style: TextStyle(
+                                          color: Constant.iconColor,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                                color: Constant.bgGrayColor,
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(10))),
+                            width: MediaQuery.of(context).size.width,
+                            padding: const EdgeInsets.all(10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(
+                                  height: 10,
+                                ),
                                 Text(
                                   'Full Name'.tr,
                                   textAlign: TextAlign.start,
                                   style: TextStyle(
-                                      color: Constant.iconColor, fontSize: 16,fontWeight: FontWeight.bold),
+                                      color: Constant.iconColor,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
                                 ),
-                                const SizedBox(height: 10,),
+                                const SizedBox(
+                                  height: 10,
+                                ),
                                 TextFormField(
-                                  autovalidateMode: AutovalidateMode
-                                      .onUserInteraction,
-                                  textInputAction:
-                                  TextInputAction.next,
-                                  decoration:  InputDecoration(
+                                  autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                                  textInputAction: TextInputAction.next,
+                                  focusNode: nameFocus,
+                                  onEditingComplete: () {
+                                    nameFocus.unfocus();
+                                    emailFocus.requestFocus();
+                                  },
+                                  decoration: InputDecoration(
                                       hintText: 'Enter Your Name'.tr,
-                                      border: const UnderlineInputBorder(borderSide: BorderSide.none,borderRadius: BorderRadius.all(Radius.circular(10))),
+                                      border: const UnderlineInputBorder(
+                                          borderSide: BorderSide.none,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10))),
                                       filled: true,
-                                      fillColor: const Color(0xffeeeeee)
-                
-                                  ),
+                                      fillColor: const Color(0xffeeeeee)),
                                   validator: (value) {
-                
                                     if (value!.isEmpty) {
                                       return 'Required Filed'.tr;
                                     }
                                     return null;
                                   },
                                   onSaved: (newValue) {
-                                    bookController.bookModel
-                                        .update((val) {
+                                    bookController.bookModel.update((val) {
                                       val?.name = newValue;
                                     });
                                   },
                                 ),
-                                const SizedBox(height: 10,),
+                                const SizedBox(
+                                  height: 10,
+                                ),
                                 Text(
                                   'Email'.tr,
                                   textAlign: TextAlign.start,
                                   style: TextStyle(
-                                      color: Constant.iconColor, fontSize: 16,fontWeight: FontWeight.bold),
+                                      color: Constant.iconColor,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
                                 ),
-                                const SizedBox(height: 10,),
+                                const SizedBox(
+                                  height: 10,
+                                ),
                                 TextFormField(
                                   focusNode: emailFocus,
-                                  onEditingComplete: (){
+                                  onEditingComplete: () {
                                     emailFocus.unfocus();
                                     phoneFocus.requestFocus();
                                   },
-                                  textInputAction:
-                                  TextInputAction.next,
+                                  textInputAction: TextInputAction.next,
                                   validator: (value) {
                                     if (value!.isNotEmpty) {
-                                     if (!EmailValidator
-                                        .validate(value)) {
-                                      return 'Most be Email'.tr;
-                                    }}
+                                      if (!EmailValidator.validate(value)) {
+                                        return 'Most be Email'.tr;
+                                      }
+                                    }
                                     return null;
-
                                   },
-                                  keyboardType:
-                                  TextInputType.emailAddress,
-                                  autovalidateMode: AutovalidateMode
-                                      .onUserInteraction,
-                
-                                  decoration:  InputDecoration(
+                                  keyboardType: TextInputType.emailAddress,
+                                  autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                                  decoration: InputDecoration(
                                       hintText: 'Enter Your Email'.tr,
-                                      border: const UnderlineInputBorder(borderSide: BorderSide.none,borderRadius: BorderRadius.all(Radius.circular(10))),
+                                      border: const UnderlineInputBorder(
+                                          borderSide: BorderSide.none,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10))),
                                       filled: true,
-                                      fillColor: const Color(0xffeeeeee)
-                                  ),
+                                      fillColor: const Color(0xffeeeeee)),
                                   onSaved: (newValue) {
-                                    bookController.bookModel
-                                        .update((val) {
+                                    bookController.bookModel.update((val) {
                                       val?.email = newValue;
                                     });
                                   },
                                 ),
-                
-                                const SizedBox(height: 10,),
+                                const SizedBox(
+                                  height: 10,
+                                ),
                                 Text(
                                   'Phone Number'.tr,
                                   textAlign: TextAlign.start,
                                   style: TextStyle(
-                                      color: Constant.iconColor, fontSize: 16,fontWeight: FontWeight.bold),
+                                      color: Constant.iconColor,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
                                 ),
-                                const SizedBox(height: 10,),
+                                const SizedBox(
+                                  height: 10,
+                                ),
                                 Directionality(
                                   textDirection: TextDirection.ltr,
                                   child: IntlPhoneField(
                                     focusNode: phoneFocus,
                                     cursorColor: Constant.mainColor,
-                                    textAlign: Get.locale.toString().substring(0,2)=='ar'?TextAlign.right:TextAlign.left,
-                                    textInputAction:
-                                    TextInputAction.done ,
-                                    initialCountryCode:'AE',
-                                   searchText: 'Search'.tr,
-                                   pickerDialogStyle: PickerDialogStyle(backgroundColor: Colors.white,),
-                                   languageCode: Get.locale.toString().substring(0,2),
-                                   invalidNumberMessage: 'Invalid Phone Number'.tr ,
+                                    textAlign:
+                                    Get.locale.toString().substring(0, 2) ==
+                                        'ar'
+                                        ? TextAlign.right
+                                        : TextAlign.left,
+                                    textInputAction: TextInputAction.done,
+                                    initialCountryCode: 'AE',
+                                    searchText: 'Search'.tr,
+                                    pickerDialogStyle: PickerDialogStyle(
+                                      backgroundColor: Colors.white,
+                                    ),
+                                    languageCode:
+                                    Get.locale.toString().substring(0, 2),
+                                    invalidNumberMessage:
+                                    'Invalid Phone Number'.tr,
                                     validator: (value) {
                                       if (value!.number.isEmpty) {
                                         return 'Required Filed'.tr;
@@ -388,70 +792,83 @@ class _BookPageState extends State<BookPage> {
                                       return null;
                                     },
                                     keyboardType: TextInputType.phone,
-                                    autovalidateMode: AutovalidateMode
-                                        .onUserInteraction,
-                                    decoration:  InputDecoration(
-                                      border: const UnderlineInputBorder(borderSide: BorderSide.none,borderRadius: BorderRadius.all(Radius.circular(10))),
+                                    autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                    decoration: InputDecoration(
+                                      border: const UnderlineInputBorder(
+                                          borderSide: BorderSide.none,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10))),
                                       filled: true,
                                       fillColor: const Color(0xffeeeeee),
                                       hintText: 'Enter Your Phone'.tr,
                                       // errorText:
                                     ),
-
                                     onSaved: (newValue) {
-                                      bookController.bookModel
-                                          .update((val) {
-                                        val?.phone = newValue?.completeNumber.toString();
+                                      bookController.bookModel.update((val) {
+                                        val?.phone =
+                                            newValue?.completeNumber.toString();
+                                        val?.countryCode=newValue?.countryCode;
                                       });
                                     },
                                   ),
                                 ),
-                
                               ],
                             ),
                           ),
-                
-                
-                
-                
+                          const SizedBox(
+                            height: 20,
+                          ),
+
                         ],
                       ),
                     );
-                
                   }),
                 ),
               ),
               Padding(
-                padding:  EdgeInsets.only(left: 5,right: 5,bottom: Platform.isIOS ? 25:15),
+                padding: EdgeInsets.only(
+                    left: 5, right: 5, bottom: Platform.isIOS ? 25 : 15),
                 child: Row(
                   children: [
                     Expanded(
                       child: ElevatedButton(
-                          style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Constant.mainColor),elevation: const MaterialStatePropertyAll(0),shape:const MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10)))),side: MaterialStatePropertyAll(BorderSide(color: Constant.mainColor!))),
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStatePropertyAll(Constant.mainColor),
+                              elevation: const MaterialStatePropertyAll(0),
+                              shape: const MaterialStatePropertyAll(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10)))),
+                              side: MaterialStatePropertyAll(
+                                  BorderSide(color: Constant.mainColor!))),
                           onPressed: () {
-
                             FocusScope.of(context).unfocus();
                             bookController.postBook();
                           },
-                          child:
-                          bookController.isSubmitLoading.value == true
+                          child: bookController.isSubmitLoading.value == true
                               ? const Padding(
-                            padding: EdgeInsets.all(7.5),
-                            child: CircularProgressIndicator(color: Colors.white,),
-                          )
+                                  padding: EdgeInsets.all(7.5),
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                  ),
+                                )
                               : Padding(
-                            padding: const EdgeInsets.only(bottom: 15.0,top: 10),
-                            child: Text('Confirmation'.tr,style: const TextStyle(color: Colors.black,fontSize: 18),
-                            ),
-                          )),
+                                  padding: const EdgeInsets.only(
+                                      bottom: 15.0, top: 10),
+                                  child: Text(
+                                    'Confirmation'.tr,
+                                    style: const TextStyle(
+                                        color: Colors.black, fontSize: 18),
+                                  ),
+                                )),
                     ),
                   ],
                 ),
               ),
             ],
           ),
-        )
-    );
+        ));
   }
-
 }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:dhile/constant.dart';
 import 'package:dhile/models/book.dart';
+import 'package:dhile/models/calculater.dart';
 import 'package:dhile/models/filter.dart';
 import 'package:dhile/models/response.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -28,6 +29,28 @@ class ApiService {
         if (res.statusCode == 200) {
           var jsonString = res.body;
           await storage.write(key: "home", value: jsonString);
+          return responseModelFromJson(jsonString);
+        } else {
+          return errorResponse(res.statusCode);
+        }
+      } else {
+        return responseModelFromJson(sr);
+      }
+    } catch (e) {
+      return errorResponse(0);
+    }
+  }
+   Future<ResponseModel> fetchArea() async {
+    try {
+      String? sr = await storage.read(key: 'area');
+      if (sr == null) {
+        // print(headers);
+        var res = await client
+            .get(Uri.parse('${Constant.domain}api/area'),headers: headers);
+
+        if (res.statusCode == 200) {
+          var jsonString = res.body;
+          await storage.write(key: "area", value: jsonString);
           return responseModelFromJson(jsonString);
         } else {
           return errorResponse(res.statusCode);
@@ -206,6 +229,27 @@ class ApiService {
       return errorResponse(0);
     }
   }
+   Future<ResponseModel> calcSubmit(Calculate calculate) async {
+    try {
+      var res = await client.post(
+
+          Uri.parse(
+            '${Constant.domain}api/calculate',
+          ),
+          body: calculateToJson(calculate),
+          headers: headers);
+      if (res.statusCode == 200) {
+        var jsonString = res.body;
+        print(calculateToJson(calculate));
+        return responseModelFromJson(jsonString);
+      } else {
+
+        return errorResponse(res.statusCode);
+      }
+    } catch (e) {
+      return errorResponse(0);
+    }
+  }
 
    Future<ResponseModel> fetchFilter(FilterModel filterModel) async {
     try {
@@ -226,7 +270,24 @@ class ApiService {
       return errorResponse(0);
     }
   }
-
+   Future<ResponseModel> confirmPay(id) async {
+    try {
+      var res = await client.post(
+          Uri.parse(
+            '${Constant.domain}api/bookConfirm',
+          ),
+          body: jsonEncode(<String, String>{'id': id}),
+          headers: headers);
+      if (res.statusCode == 200) {
+        var jsonString = res.body;
+        return responseModelFromJson(jsonString);
+      } else {
+        return errorResponse(res.statusCode);
+      }
+    } catch (e) {
+      return errorResponse(0);
+    }
+  }
 
    ResponseModel errorResponse(code) {
     ResponseModel responseModel = ResponseModel(

@@ -3,6 +3,8 @@ import 'package:dhile/pages/book.dart';
 import 'package:dhile/pages/brand_details.dart';
 import 'package:dhile/pages/brand.dart';
 import 'package:dhile/pages/car_details.dart';
+import 'package:dhile/pages/checkout.dart';
+import 'package:dhile/pages/faild.dart';
 import 'package:dhile/pages/faq.dart';
 import 'package:dhile/pages/home.dart';
 import 'package:dhile/pages/offers_details.dart';
@@ -83,6 +85,19 @@ class AppRoute {
           name: '/thank',
           page: (){
            return  const ThankPage();
+          },
+          transition: Transition.downToUp
+      ),
+      GetPage(
+          name: '/checkout',
+          page: (){
+            return  CheckOutPage(initialUrl: Get.arguments[0]);
+          },
+          transition: Transition.downToUp
+      ),GetPage(
+          name: '/fail',
+          page: (){
+            return  const FailPage();
           },
           transition: Transition.downToUp
       )

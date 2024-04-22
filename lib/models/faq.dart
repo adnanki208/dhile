@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 FaqModel faqFromJson(String str) => FaqModel.fromJson(json.decode(str));
 
 
@@ -16,6 +15,7 @@ class FaqModel {
   );
 
 }
+
 
 class Faq {
 

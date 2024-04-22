@@ -137,6 +137,7 @@ class Car {
   int typeId;
   int brandId;
   int bodyId;
+  int minDays;
   String model;
   String? offer;
   String description;
@@ -164,6 +165,7 @@ class Car {
     required this.brandId,
     required this.bodyId,
     required this.model,
+    required this.minDays,
      this.offer,
     required this.description,
     required this.year,
@@ -190,6 +192,7 @@ class Car {
     typeId: json["type_id"],
     brandId: json["brand_id"],
     bodyId: json["body_id"],
+    minDays: json["min_days"],
     model: json["model"],
     offer: json["offer"],
     description: json["description"],
