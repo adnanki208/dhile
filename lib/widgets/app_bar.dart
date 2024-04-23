@@ -413,66 +413,65 @@ class AppBarCustom extends StatelessWidget  implements PreferredSizeWidget{
               width: 3
           )
       ),
-      title:Center(
-        child: Row(
-          mainAxisAlignment:showFilter==true?MainAxisAlignment.spaceBetween :MainAxisAlignment.center,
-          children: [
-            SizedBox(
+      title:Row(
+        mainAxisSize:showFilter==true?MainAxisSize.max:MainAxisSize.min,
+        mainAxisAlignment:showFilter==true?MainAxisAlignment.spaceBetween :MainAxisAlignment.center,
+        children: [
+          SizedBox(
 
-                width: 80,
-                child: GestureDetector(
-                  onTap: () {
-                    Get.offAllNamed('/home');
-                  },
-                  child: Hero(
-                    tag: 'logo',
-                    child: SvgPicture.asset('assets/imgs/logo.svg',
-                        width: (Get.width * 0.18) <= 100 ? Get.width * 0.18: 200),
-                  ),
-                )),
-            if(showFilter==true)
-            SizedBox(
-              height: 40,
-
-              width: Get.width*0.5,
-              child: TextField(
-                textAlign: TextAlign.center,
-                textInputAction: TextInputAction.search,
-
-                onSubmitted: (value) {
-                  homeController.searchValue(value);
-                  if (value != '') {
-                    homeController.postSearch(value);
-                  } else {
-                    homeController.getHome();
-                  }
-                },
-                style: TextStyle(color: Constant.dark,height:1,fontSize: Constant.fontSize),
-                decoration: InputDecoration(
-                  hoverColor: Constant.mainColor,
-                  isDense: true,
-                  hintStyle: TextStyle(color: Constant.dark,),
-                  filled: true,
-                  fillColor:  Constant.bgColor,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(50),
-                    borderSide: BorderSide.none,
-                  ),
-                  hintText: "Search".tr,
-                  prefixIcon:  Icon(Icons.search,size: Constant.iconSize),
-                  prefixIconColor: Colors.grey,
-                ),
-              ),),
-            if(showFilter==true)
-            GestureDetector(
+              width: 80,
+              child: GestureDetector(
                 onTap: () {
-                  openBottomSheet();
+                  Get.offAllNamed('/home');
                 },
-                child:  SvgPicture.asset('assets/imgs/filter.svg',
-    width: 40)),
+                child: Hero(
+                  tag: 'logo',
+                  child: SvgPicture.asset('assets/imgs/logo.svg',
+                      width: (Get.width * 0.18) <= 100 ? Get.width * 0.18: 200),
+                ),
+              )),
+          if(showFilter==true)
+          SizedBox(
+            height: 40,
 
-          ],
-        ),
+            width: Get.width*0.5,
+            child: TextField(
+              textAlign: TextAlign.center,
+              textInputAction: TextInputAction.search,
+
+              onSubmitted: (value) {
+                homeController.searchValue(value);
+                if (value != '') {
+                  homeController.postSearch(value);
+                } else {
+                  homeController.getHome();
+                }
+              },
+              style: TextStyle(color: Constant.dark,height:1,fontSize: Constant.fontSize),
+              decoration: InputDecoration(
+                hoverColor: Constant.mainColor,
+                isDense: true,
+                hintStyle: TextStyle(color: Constant.dark,),
+                filled: true,
+                fillColor:  Constant.bgColor,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(50),
+                  borderSide: BorderSide.none,
+                ),
+                hintText: "Search".tr,
+                prefixIcon:  Icon(Icons.search,size: Constant.iconSize),
+                prefixIconColor: Colors.grey,
+              ),
+            ),),
+          if(showFilter==true)
+          GestureDetector(
+              onTap: () {
+                openBottomSheet();
+              },
+              child:  SvgPicture.asset('assets/imgs/filter.svg',
+          width: 40)),
+
+        ],
       ),
       centerTitle: true,
 

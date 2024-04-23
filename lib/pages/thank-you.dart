@@ -88,7 +88,7 @@ class _ThankPageState extends State<ThankPage> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Thank You  For Booking'.tr,textAlign: TextAlign.center,style: TextStyle(fontSize: 30,color: Constant.dark)),
+                      Text('ThankYouForBooking'.tr,textAlign: TextAlign.center,style: TextStyle(fontSize: 30,color: Constant.dark)),
                     ],
                   ),
                 ],
@@ -132,7 +132,7 @@ class _ThankPageState extends State<ThankPage> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('We Will Call You Soon'.tr,textAlign: TextAlign.center,style: TextStyle(fontSize: 20,color: Constant.dark)),
+                      Text('WeWillCallYouSoon'.tr,textAlign: TextAlign.center,style: TextStyle(fontSize: 20,color: Constant.dark)),
                     ],
                   ),
                 ],

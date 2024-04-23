@@ -219,6 +219,7 @@ class ApiService {
           ),
           body: bookToJson(bookModel),
           headers: headers);
+
       if (res.statusCode == 200) {
         var jsonString = res.body;
         return responseModelFromJson(jsonString);
@@ -240,7 +241,7 @@ class ApiService {
           headers: headers);
       if (res.statusCode == 200) {
         var jsonString = res.body;
-        print(calculateToJson(calculate));
+        // print(calculateToJson(calculate));
         return responseModelFromJson(jsonString);
       } else {
 

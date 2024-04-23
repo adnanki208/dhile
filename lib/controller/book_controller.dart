@@ -14,6 +14,7 @@ class BookController extends GetxController{
   BookController();
 
   Rx<bool> isLoading=true.obs;
+  Rx<bool> isAccept=false.obs;
   Rx<bool> isAreaReady=false.obs;
   Rx<bool> isSubmitLoading=false.obs;
   Rx<bool> isFail=false.obs;
@@ -64,6 +65,7 @@ class BookController extends GetxController{
         val?.phone=null;
         val?.fromDate=null;
         val?.toDate=null;
+        val?.code=null;
 
       });
       calculate.update((val) {
@@ -71,6 +73,7 @@ class BookController extends GetxController{
         val?.drop=0;
         val?.areaPick=areaModel.value!.area[0].id;
         val?.areaDrop=areaModel.value!.area[0].id;
+        val?.code=null;
       });
       start(DateTime.now());
       end(DateTime.now().add(Duration(days: minDays.value)));

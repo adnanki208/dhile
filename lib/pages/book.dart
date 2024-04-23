@@ -3,9 +3,7 @@ import 'package:dhile/constant.dart';
 import 'package:dhile/controller/book_controller.dart';
 import 'package:dhile/models/home.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -126,11 +124,17 @@ class _BookPageState extends State<BookPage> {
         appBar: AppBar(
           scrolledUnderElevation: 0,
           backgroundColor: Colors.white,
-          title: Text('Your Information'.tr,
-              style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: Constant.iconColor)),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('Your Information'.tr,
+                  style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Constant.iconColor)),
+            ],
+          ),
           centerTitle: true,
           actions: [
             GestureDetector(
@@ -161,7 +165,6 @@ class _BookPageState extends State<BookPage> {
                           const SizedBox(
                             height: 15,
                           ),
-
                           Row(
                             children: [
                               Text(
@@ -241,7 +244,7 @@ class _BookPageState extends State<BookPage> {
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Text(
-                                          'Pick Up Location'.tr,
+                                          'PickUpLocation'.tr,
                                           textAlign: TextAlign.start,
                                           style: TextStyle(
                                               color: Constant.iconColor,
@@ -296,7 +299,7 @@ class _BookPageState extends State<BookPage> {
                                                   .update((val) {
                                                 val?.pick = value;
                                               });
-                                                          
+
                                               bookController.calc();
                                             },
                                           ),
@@ -304,37 +307,48 @@ class _BookPageState extends State<BookPage> {
                                         Text('Deliver'.tr)
                                       ],
                                     ),
-                                    if(bookController.isAreaReady.value == true && bookController.calculate.value.pick==1 )
+                                    if (bookController.isAreaReady.value ==
+                                            true &&
+                                        bookController.calculate.value.pick ==
+                                            1)
                                       Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           Flexible(
                                             child: Padding(
-                                              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 10.0),
                                               child: DropdownButtonFormField(
-                                                dropdownColor: Constant.bgGrayColor,
+                                                dropdownColor:
+                                                    Constant.bgGrayColor,
                                                 decoration: InputDecoration(
-                                                  focusedBorder:  UnderlineInputBorder(
+                                                  focusedBorder:
+                                                      UnderlineInputBorder(
                                                     borderSide: BorderSide(
-                                                        color: Constant.mainColor!
-                                                    ),),
+                                                        color: Constant
+                                                            .mainColor!),
+                                                  ),
                                                 ),
-                                                              isExpanded: true,
-                                                value: bookController.calculate.value.areaPick ?? bookController
-                                                    .areaModel.value!.area[0].id,
+                                                isExpanded: true,
+                                                value: bookController.calculate
+                                                        .value.areaPick ??
+                                                    bookController.areaModel
+                                                        .value!.area[0].id,
                                                 onChanged: (value) {
                                                   bookController.calculate
                                                       .update((val) {
                                                     val?.areaPick = value;
                                                   });
                                                   bookController.calc();
-
                                                 },
                                                 items: bookController
                                                     .areaModel.value!.area
-                                                    .map((data) => DropdownMenuItem(
-                                                    value: data.id,
-                                                    child: Text(data.name)))
+                                                    .map((data) =>
+                                                        DropdownMenuItem(
+                                                            value: data.id,
+                                                            child: Text(
+                                                                data.name)))
                                                     .toList(),
                                               ),
                                             ),
@@ -351,7 +365,7 @@ class _BookPageState extends State<BookPage> {
                                     Row(
                                       children: [
                                         Text(
-                                          'Drop Off Location'.tr,
+                                          'DropOffLocation'.tr,
                                           textAlign: TextAlign.start,
                                           style: TextStyle(
                                               color: Constant.iconColor,
@@ -412,40 +426,48 @@ class _BookPageState extends State<BookPage> {
                                         Text('Deliver'.tr)
                                       ],
                                     ),
-
-                                    if(bookController.isAreaReady.value == true && bookController.calculate.value.drop==1 )
+                                    if (bookController.isAreaReady.value ==
+                                            true &&
+                                        bookController.calculate.value.drop ==
+                                            1)
                                       Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           Flexible(
                                             child: Padding(
-                                              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 10.0),
                                               child: DropdownButtonFormField(
-
-                                                dropdownColor: Constant.bgGrayColor,
+                                                dropdownColor:
+                                                    Constant.bgGrayColor,
                                                 decoration: InputDecoration(
-                                                  focusedBorder:  UnderlineInputBorder(
+                                                  focusedBorder:
+                                                      UnderlineInputBorder(
                                                     borderSide: BorderSide(
-                                                        color: Constant.mainColor!
-                                                    ),),
+                                                        color: Constant
+                                                            .mainColor!),
+                                                  ),
                                                 ),
-
                                                 isExpanded: true,
-                                                value: bookController.calculate.value.areaDrop ?? bookController
-                                                    .areaModel.value!.area[0].id,
+                                                value: bookController.calculate
+                                                        .value.areaDrop ??
+                                                    bookController.areaModel
+                                                        .value!.area[0].id,
                                                 onChanged: (value) {
                                                   bookController.calculate
                                                       .update((val) {
                                                     val?.areaDrop = value;
                                                   });
                                                   bookController.calc();
-
                                                 },
                                                 items: bookController
                                                     .areaModel.value!.area
-                                                    .map((data) => DropdownMenuItem(
-                                                    value: data.id,
-                                                    child: Text(data.name)))
+                                                    .map((data) =>
+                                                        DropdownMenuItem(
+                                                            value: data.id,
+                                                            child: Text(
+                                                                data.name)))
                                                     .toList(),
                                               ),
                                             ),
@@ -453,7 +475,6 @@ class _BookPageState extends State<BookPage> {
                                         ],
                                       )
                                   ],
-
                                 ),
                               ),
                             ],
@@ -525,12 +546,51 @@ class _BookPageState extends State<BookPage> {
                                   Text('PayNow'.tr)
                                 ],
                               ),
+                              Row(
+                                children: [
+                                  Text(
+                                    'DiscountCode'.tr,
+                                    textAlign: TextAlign.start,
+                                    style: TextStyle(
+                                        color: Constant.iconColor,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              TextFormField(
+                                textInputAction: TextInputAction.next,
+                                onChanged: (value) {
+                                  bookController.calculate.update((val) {
+                                    val?.code = value;
+                                  });
+                                  bookController.calc();
+                                },
+                                decoration: InputDecoration(
+                                    hintText: 'EnterCode'.tr,
+                                    border: const UnderlineInputBorder(
+                                        borderSide: BorderSide.none,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10))),
+                                    filled: true,
+                                    fillColor: const Color(0xffeeeeee)),
+                                onSaved: (newValue) {
+                                  bookController.bookModel.update((val) {
+                                    val?.code = newValue;
+                                  });
+                                },
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
                             ],
                           ),
                           const SizedBox(
                             height: 20,
                           ),
-
                           Container(
                             decoration: BoxDecoration(
                                 color: Constant.bgGrayColor,
@@ -676,7 +736,7 @@ class _BookPageState extends State<BookPage> {
                                 ),
                                 TextFormField(
                                   autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
+                                      AutovalidateMode.onUserInteraction,
                                   textInputAction: TextInputAction.next,
                                   focusNode: nameFocus,
                                   onEditingComplete: () {
@@ -734,7 +794,7 @@ class _BookPageState extends State<BookPage> {
                                   },
                                   keyboardType: TextInputType.emailAddress,
                                   autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
+                                      AutovalidateMode.onUserInteraction,
                                   decoration: InputDecoration(
                                       hintText: 'Enter Your Email'.tr,
                                       border: const UnderlineInputBorder(
@@ -769,10 +829,10 @@ class _BookPageState extends State<BookPage> {
                                     focusNode: phoneFocus,
                                     cursorColor: Constant.mainColor,
                                     textAlign:
-                                    Get.locale.toString().substring(0, 2) ==
-                                        'ar'
-                                        ? TextAlign.right
-                                        : TextAlign.left,
+                                        Get.locale.toString().substring(0, 2) ==
+                                                'ar'
+                                            ? TextAlign.right
+                                            : TextAlign.left,
                                     textInputAction: TextInputAction.done,
                                     initialCountryCode: 'AE',
                                     searchText: 'Search'.tr,
@@ -780,9 +840,9 @@ class _BookPageState extends State<BookPage> {
                                       backgroundColor: Colors.white,
                                     ),
                                     languageCode:
-                                    Get.locale.toString().substring(0, 2),
+                                        Get.locale.toString().substring(0, 2),
                                     invalidNumberMessage:
-                                    'Invalid Phone Number'.tr,
+                                        'Invalid Phone Number'.tr,
                                     validator: (value) {
                                       if (value!.number.isEmpty) {
                                         return 'Required Filed'.tr;
@@ -793,7 +853,7 @@ class _BookPageState extends State<BookPage> {
                                     },
                                     keyboardType: TextInputType.phone,
                                     autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
+                                        AutovalidateMode.onUserInteraction,
                                     decoration: InputDecoration(
                                       border: const UnderlineInputBorder(
                                           borderSide: BorderSide.none,
@@ -808,7 +868,8 @@ class _BookPageState extends State<BookPage> {
                                       bookController.bookModel.update((val) {
                                         val?.phone =
                                             newValue?.completeNumber.toString();
-                                        val?.countryCode=newValue?.countryCode;
+                                        val?.countryCode =
+                                            newValue?.countryCode;
                                       });
                                     },
                                   ),
@@ -819,50 +880,86 @@ class _BookPageState extends State<BookPage> {
                           const SizedBox(
                             height: 20,
                           ),
-
                         ],
                       ),
                     );
                   }),
                 ),
               ),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Checkbox(
+                        focusColor: Constant.mainColor,
+                        activeColor: Constant.mainColor,
+                        value: bookController.isAccept.value,
+                        onChanged: (newValue) {
+                          setState(() => bookController.isAccept(newValue));
+                        }),
+                    GestureDetector(
+                        child: Row(
+                          children: [
+                            Text('Accept'.tr,
+                                style: const TextStyle(fontSize: 16)),
+                            Text(' '),
+                            Text('Terms&Conditions'.tr,style: TextStyle(fontSize: 16,color: Colors.blue),)
+                          ],
+                        ),
+                        onTap: () {
+                          Get.defaultDialog(
+                            content: Flexible(
+                              child: SingleChildScrollView(
+                                child: Text('TermContent'.tr,
+                                   ),
+                              ),
+                            ),
+                            title: 'Terms&Conditions'.tr
+                          );
+                        }),
+                  ]),
               Padding(
                 padding: EdgeInsets.only(
                     left: 5, right: 5, bottom: Platform.isIOS ? 25 : 15),
                 child: Row(
                   children: [
                     Expanded(
-                      child: ElevatedButton(
-                          style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStatePropertyAll(Constant.mainColor),
-                              elevation: const MaterialStatePropertyAll(0),
-                              shape: const MaterialStatePropertyAll(
-                                  RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(10)))),
-                              side: MaterialStatePropertyAll(
-                                  BorderSide(color: Constant.mainColor!))),
-                          onPressed: () {
-                            FocusScope.of(context).unfocus();
-                            bookController.postBook();
-                          },
-                          child: bookController.isSubmitLoading.value == true
-                              ? const Padding(
-                                  padding: EdgeInsets.all(7.5),
-                                  child: CircularProgressIndicator(
-                                    color: Colors.white,
-                                  ),
-                                )
-                              : Padding(
-                                  padding: const EdgeInsets.only(
-                                      bottom: 15.0, top: 10),
-                                  child: Text(
-                                    'Confirmation'.tr,
-                                    style: const TextStyle(
-                                        color: Colors.black, fontSize: 18),
-                                  ),
-                                )),
+                      child: IgnorePointer(
+                        ignoring: !bookController.isAccept.value,
+                        child: ElevatedButton(
+                            style: ButtonStyle(
+                                backgroundColor: MaterialStatePropertyAll(
+                                    bookController.isAccept.value == true
+                                        ? Constant.mainColor!
+                                        : const Color(0xffc7a340)),
+                                elevation: const MaterialStatePropertyAll(0),
+                                shape: const MaterialStatePropertyAll(
+                                    RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10)))),
+                                side: MaterialStatePropertyAll(
+                                    BorderSide(color: Constant.mainColor!))),
+                            onPressed: () {
+                              FocusScope.of(context).unfocus();
+                              bookController.postBook();
+                            },
+                            child: bookController.isSubmitLoading.value == true
+                                ? const Padding(
+                                    padding: EdgeInsets.all(7.5),
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                : Padding(
+                                    padding: const EdgeInsets.only(
+                                        bottom: 15.0, top: 10),
+                                    child: Text(
+                                      'Confirmation'.tr,
+                                      style: const TextStyle(
+                                          color: Colors.black, fontSize: 18),
+                                    ),
+                                  )),
+                      ),
                     ),
                   ],
                 ),

@@ -1,6 +1,4 @@
 import 'dart:async';
-
-import 'package:dhile/constant.dart';
 import 'package:dhile/controller/home_controller.dart';
 import 'package:dhile/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +49,7 @@ class _FailPageState extends State<FailPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 35,),
-              Text('Booking Failed'.tr,style: const TextStyle(fontSize: 30,color: Colors.black)),
+              Text('BookingFailed'.tr,style: const TextStyle(fontSize: 30,color: Colors.black)),
               const SizedBox(height: 45,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -64,7 +62,7 @@ class _FailPageState extends State<FailPage> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Thank You  For Trying'.tr,textAlign: TextAlign.center,style: const TextStyle(fontSize: 30,color: Colors.black)),
+                  Text('ThankYouForTrying'.tr,textAlign: TextAlign.center,style: const TextStyle(fontSize: 30,color: Colors.black)),
                 ],
               ),
               const SizedBox(height: 25,),
@@ -72,7 +70,7 @@ class _FailPageState extends State<FailPage> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('We Will Call You Soon',textAlign: TextAlign.center,style: TextStyle(fontSize: 20,color: Colors.black)),
+                  Text('WeWillCallYouSoon',textAlign: TextAlign.center,style: TextStyle(fontSize: 20,color: Colors.black)),
                 ],
               ),
             ],
