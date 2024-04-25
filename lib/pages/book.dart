@@ -902,8 +902,8 @@ class _BookPageState extends State<BookPage> {
                           children: [
                             Text('Accept'.tr,
                                 style: const TextStyle(fontSize: 16)),
-                            Text(' '),
-                            Text('Terms&Conditions'.tr,style: TextStyle(fontSize: 16,color: Colors.blue),)
+                            const Text(' '),
+                            Text('Terms&Conditions'.tr,style: const TextStyle(fontSize: 16,color: Colors.blue),)
                           ],
                         ),
                         onTap: () {
