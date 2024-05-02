@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "218687130050",
+    "project_id": "al-dhile-208",
+    "storage_bucket": "al-dhile-208.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:218687130050:android:037667f67a953ba83a2e5b",
+        "android_client_info": {
+          "package_name": "com.Maxart.Dhile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVl79I2tRmiyM19ZY_akeHbQWrsN9U3To"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:218687130050:android:46008e15f766ef803a2e5b",
+        "android_client_info": {
+          "package_name": "dhile.ae.dhile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVl79I2tRmiyM19ZY_akeHbQWrsN9U3To"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
