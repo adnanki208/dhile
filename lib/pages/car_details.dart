@@ -42,7 +42,7 @@ class _CarDetailsPageState extends State<CarDetailsPage> {
   HomeController homeController = HomeController();
 
   Future getData() async {
-    await homeController.getCarFeaturesById(widget.car.id);
+    await homeController.getCarFeaturesById(widget.car.id.toString());
   }
 
   @override

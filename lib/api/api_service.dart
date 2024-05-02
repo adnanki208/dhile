@@ -190,13 +190,32 @@ class ApiService {
       return errorResponse(0);
     }
   }
-   Future<ResponseModel> getCarFeaturesById(int id) async {
+   Future<ResponseModel> getCarFeaturesById(String id) async {
     try {
       var res = await client.post(
           Uri.parse(
             '${Constant.domain}api/features',
           ),
-          body: jsonEncode(<String, String>{'id': id.toString()}),
+          body: jsonEncode(<String, String>{'id': id}),
+          headers: headers);
+
+      if (res.statusCode == 200) {
+        var jsonString = res.body;
+        return responseModelFromJson(jsonString);
+      } else {
+        return errorResponse(res.statusCode);
+      }
+    } catch (e) {
+      return errorResponse(0);
+    }
+  }
+   Future<ResponseModel> getCarById(String id) async {
+    try {
+      var res = await client.post(
+          Uri.parse(
+            '${Constant.domain}api/carDetails',
+          ),
+          body: jsonEncode(<String, String>{'id': id}),
           headers: headers);
 
       if (res.statusCode == 200) {

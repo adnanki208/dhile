@@ -11,8 +11,10 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class HomeController extends GetxController {
   Rx<bool> isLoading = true.obs;
   Rx<bool> isLoading2 = false.obs;
+  Rx<bool> isLoading3 = true.obs;
   Rx<bool> seeMore = false.obs;
   Rx<bool> isFail = false.obs;
+  Rx<bool> isFail3 = false.obs;
   String? phone;
   String? whats;
   var brandsId = <int>[].obs;
@@ -151,14 +153,31 @@ class HomeController extends GetxController {
       print(e);
     }
   }
-  Future<void> getCarFeaturesById(int id) async {
+  Future<void> getCarFeaturesById(String id) async {
     try {
-        isLoading(true);
+        isLoading3(true);
       response = await ApiService().getCarFeaturesById(id);
       if (response.code == 1 || response.code == -2) {
         whats= await storage.read(key: 'whatsapp');
         phone= await storage.read(key: 'phone');
         features(FeaturesModel.fromJson(response.data));
+        cars (CarsModel.fromJson(response.data));
+        isFail3(false);
+        isLoading3(false);
+      } else {
+        mainController.responseCheck(response, getCarFeaturesById(id));
+        isFail3(true);
+        isLoading3(false);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+  Future<void> getCarById(String id) async {
+    try {
+        isLoading(true);
+      response = await ApiService().getCarById(id);
+      if (response.code == 1) {
         cars (CarsModel.fromJson(response.data));
         isFail(false);
         isLoading(false);

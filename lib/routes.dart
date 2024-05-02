@@ -3,6 +3,7 @@ import 'package:dhile/pages/book.dart';
 import 'package:dhile/pages/brand_details.dart';
 import 'package:dhile/pages/brand.dart';
 import 'package:dhile/pages/car_details.dart';
+import 'package:dhile/pages/car_notification_details.dart';
 import 'package:dhile/pages/checkout.dart';
 import 'package:dhile/pages/faild.dart';
 import 'package:dhile/pages/faq.dart';
@@ -65,6 +66,13 @@ class AppRoute {
           page: (){
 
            return  CarDetailsPage(car: Get.arguments[0],);
+          },
+          transition: Transition.fadeIn
+      ), GetPage(
+          name: '/carNotificationDetails',
+          page: (){
+
+           return  CarNotificationDetailsPage(id: Get.arguments[0],);
           },
           transition: Transition.fadeIn
       ),

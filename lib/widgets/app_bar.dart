@@ -11,10 +11,12 @@ class AppBarCustom extends StatelessWidget  implements PreferredSizeWidget{
     super.key,
      this.homeController,
     required this.showFilter,
+    this.back=false
   });
 
   final    homeController;
   final bool showFilter;
+  final bool back;
   void openBottomSheet() {
     Get.bottomSheet(
       Padding(
@@ -474,6 +476,13 @@ class AppBarCustom extends StatelessWidget  implements PreferredSizeWidget{
         ],
       ),
       centerTitle: true,
+
+      leading:back==true? GestureDetector(
+        onTap: () {
+          Get.offAllNamed('/home');
+        },
+        child: Icon(Icons.arrow_back,color: Colors.black,),
+      ):null,
 
     );
   }
