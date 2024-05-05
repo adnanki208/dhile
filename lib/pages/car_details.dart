@@ -598,14 +598,14 @@ class _CarDetailsPageState extends State<CarDetailsPage> {
                             height: 15,
                           ),
                         Obx(() {
-                          if (homeController.isLoading.value == true) {
+                          if (homeController.isLoading3.value == true) {
                             return Center(
                               child: CircularProgressIndicator(
                                 color: Constant.mainColor,
                               ),
                             );
                           } else {
-                            if (homeController.isFail.value == false) {
+                            if (homeController.isFail3.value == false) {
                               if (homeController.features.value != null) {
                                 return Column(
                                   children: [
