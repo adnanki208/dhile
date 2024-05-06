@@ -29,8 +29,8 @@ class FirebaseApi {
     );
     final fCMToken = await _firebaseMessaging.getToken();
     // print(settings.authorizationStatus);
-    // print('-------------------------------------------');
-    // print(fCMToken);
+    print('-------------------------------------------');
+    print(fCMToken);
     await _firebaseMessaging.subscribeToTopic('dhile');
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
@@ -63,7 +63,7 @@ class LocalNoti {
   static Future initialize(
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
     var androidInitialize =
-        const AndroidInitializationSettings('mipmap/ic_launcher');
+        const AndroidInitializationSettings('drawable/ic_notification');
     var iosInitialize = DarwinInitializationSettings();
     var initializationSettings =
         InitializationSettings(android: androidInitialize, iOS: iosInitialize);
