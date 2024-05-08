@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:dhile/api/firebase_api.dart';
 import 'package:dhile/constant.dart';
 import 'package:dhile/controller/HomeControllerBinding.dart';
@@ -20,7 +19,6 @@ import 'package:page_transition/page_transition.dart';
 import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
 void main() async{
