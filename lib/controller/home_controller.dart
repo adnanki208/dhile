@@ -4,6 +4,7 @@ import 'package:dhile/models/features.dart';
 import 'package:dhile/models/filter.dart';
 import 'package:dhile/models/home.dart';
 import 'package:dhile/models/response.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -285,7 +286,9 @@ class HomeController extends GetxController {
         typeId.refresh();
       }
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }finally{
       isLoading2(false);
     }

@@ -10,6 +10,7 @@ import 'package:dhile/routes.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -30,7 +31,7 @@ void main() async{
   );
   await FirebaseApi().initNotifications();
   LocalNoti.initialize(flutterLocalNotificationsPlugin);
-
+  FlutterAppBadger.removeBadge();
   runApp(const MyApp());
 }
 
