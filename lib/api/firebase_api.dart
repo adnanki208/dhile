@@ -29,8 +29,8 @@ class FirebaseApi {
     );
     final fCMToken = await _firebaseMessaging.getToken();
     // print(settings.authorizationStatus);
-    print('-------------------------------------------');
-    print(fCMToken);
+    // print('-------------------------------------------');
+    // print(fCMToken);
     await _firebaseMessaging.subscribeToTopic('dhile');
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
@@ -41,21 +41,6 @@ class FirebaseApi {
       NotificationModel notificationModel = notificationFromJson(jsonEncode(event.data));
       Get.offAllNamed('/carNotificationDetails',arguments:[notificationModel.id]);
     });
-
-
-//     await FirebaseMessaging.instance.getInitialMessage().then((value) {
-//
-//       // if(value!=null) {
-//       //   print('xxxxxxxxxxxxxxxxxx');
-//       //   print(value);
-//       //   print(value.data);
-//       //   NotificationModel notificationModel = notificationFromJson(jsonEncode(value.data));
-//       //   Get.offAllNamed('/carNotificationDetails', arguments: [notificationModel.id]);
-//       // }else{
-//       //   return null;
-//       // }
-// print('xxxxx');
-//     });
     }
 }
 
@@ -101,9 +86,10 @@ class LocalNoti {
             largeIcon: ByteArrayAndroidBitmap.fromBase64String(base64Encode(brand.bodyBytes)),
           )
     );
+
     var not = NotificationDetails(
         android: androidPlatformChannelSpecifics,
-        iOS: DarwinNotificationDetails());
+        iOS: DarwinNotificationDetails(attachments: [DarwinNotificationAttachment('${Constant.domain}${notificationModel.image}')]));
     await fln.show(0, title, body, not,payload: jsonEncode(payload));
   }
 }
