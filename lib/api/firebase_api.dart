@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:dhile/constant.dart';
 import 'package:dhile/models/notification.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
