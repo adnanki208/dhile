@@ -37,8 +37,8 @@ class FirebaseApi {
     // print(fCMToken);
     await _firebaseMessaging.subscribeToTopic('dhile');
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print(message.notification);
       final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+      // print(message.data);
       LocalNoti.showBigTextNotification(title:'${message.notification?.title}'.tr, body: '${message.notification?.body}'.tr,payload: message.data, fln: flutterLocalNotificationsPlugin);
     });
     FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
@@ -77,8 +77,8 @@ class LocalNoti {
       var payload,
       required FlutterLocalNotificationsPlugin fln}) async {
    NotificationModel notificationModel = notificationFromJson(jsonEncode(payload));
-   final http.Response response = await http.get(Uri.parse('${Constant.domain}${notificationModel.image}'));
-   final http.Response brand = await http.get(Uri.parse('${Constant.domain}${notificationModel.brand}'));
+   final http.Response response = await http.get(Uri.parse(notificationModel.image));
+   final http.Response brand = await http.get(Uri.parse(notificationModel.brand));
     AndroidNotificationDetails androidPlatformChannelSpecifics =
          AndroidNotificationDetails(
       'noti',
@@ -95,7 +95,7 @@ class LocalNoti {
     var not = NotificationDetails(
         android: androidPlatformChannelSpecifics,
         iOS: const DarwinNotificationDetails());
-        // iOS: DarwinNotificationDetails(attachments: [DarwinNotificationAttachment('${Constant.domain}${notificationModel.image}')]));
+        // iOS: DarwinNotificationDetails(attachments: [DarwinNotificationAttachment('${notificationModel.image}')]));
     await fln.show(0, title, body, not,payload: jsonEncode(payload));
   }
 }
