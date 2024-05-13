@@ -53,7 +53,7 @@ class LocalNoti {
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
     var androidInitialize =
         const AndroidInitializationSettings('drawable/ic_notification');
-    var iosInitialize = const DarwinInitializationSettings();
+    var iosInitialize = const DarwinInitializationSettings(requestAlertPermission: true,requestBadgePermission: true,requestSoundPermission: true);
     var initializationSettings =
         InitializationSettings(android: androidInitialize, iOS: iosInitialize);
     await flutterLocalNotificationsPlugin.initialize(
@@ -75,9 +75,9 @@ class LocalNoti {
       required String body,
       var payload,
       required FlutterLocalNotificationsPlugin fln}) async {
-   NotificationModel notificationModel = notificationFromJson(jsonEncode(payload));
-   final http.Response response = await http.get(Uri.parse('${Constant.domain}${notificationModel.image}'));
-   final http.Response brand = await http.get(Uri.parse('${Constant.domain}${notificationModel.brand}'));
+   // NotificationModel notificationModel = notificationFromJson(jsonEncode(payload));
+   // final http.Response response = await http.get(Uri.parse('${Constant.domain}${notificationModel.image}'));
+   // final http.Response brand = await http.get(Uri.parse('${Constant.domain}${notificationModel.brand}'));
     AndroidNotificationDetails androidPlatformChannelSpecifics =
          AndroidNotificationDetails(
       'noti',
@@ -85,15 +85,16 @@ class LocalNoti {
       playSound: true,
       importance: Importance.max,
       priority: Priority.high,
-          styleInformation:   BigPictureStyleInformation(
-            ByteArrayAndroidBitmap.fromBase64String(base64Encode(response.bodyBytes)),
-            largeIcon: ByteArrayAndroidBitmap.fromBase64String(base64Encode(brand.bodyBytes)),
-          )
+          // styleInformation:   BigPictureStyleInformation(
+          //   ByteArrayAndroidBitmap.fromBase64String(base64Encode(response.bodyBytes)),
+          //   largeIcon: ByteArrayAndroidBitmap.fromBase64String(base64Encode(brand.bodyBytes)),
+          // )
     );
 
     var not = NotificationDetails(
         android: androidPlatformChannelSpecifics,
-        iOS: DarwinNotificationDetails(attachments: [DarwinNotificationAttachment('${Constant.domain}${notificationModel.image}')]));
+        iOS: const DarwinNotificationDetails());
+        // iOS: DarwinNotificationDetails(attachments: [DarwinNotificationAttachment('${Constant.domain}${notificationModel.image}')]));
     await fln.show(0, title, body, not,payload: jsonEncode(payload));
   }
 }

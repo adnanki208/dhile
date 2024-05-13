@@ -30,6 +30,7 @@ void main() async{
   await FirebaseApi().initNotifications();
   LocalNoti.initialize(flutterLocalNotificationsPlugin);
   FlutterAppBadger.removeBadge();
+  LocalNoti.showBigTextNotification(title: 'aaaa', body: 'bbbbbb', fln: flutterLocalNotificationsPlugin);
   runApp(const MyApp());
 }
 
