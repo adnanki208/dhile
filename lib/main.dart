@@ -29,8 +29,6 @@ void main() async{
   await FirebaseApi().initNotifications();
   LocalNoti.initialize(flutterLocalNotificationsPlugin);
   FlutterAppBadger.removeBadge();
-  String  x='{"image": "https://phplaravel-548447-4346140.cloudwaysapps.com/uploads/car/03lHXwUhoKtTBc79kI4pQDxIEqxApPRO9FwKfmYc.png", "id": "18", "brand": "https://phplaravel-548447-4346140.cloudwaysapps.com/uploads/car/03lHXwUhoKtTBc79kI4pQDxIEqxApPRO9FwKfmYc.png"}';
-  LocalNoti.showBigTextNotification(title: 'test', body: 'bodyyy',payload:  jsonDecode(x), fln: flutterLocalNotificationsPlugin);
   runApp(const MyApp());
 }
 
