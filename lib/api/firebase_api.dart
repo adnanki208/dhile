@@ -37,6 +37,7 @@ class FirebaseApi {
     // print(fCMToken);
     await _firebaseMessaging.subscribeToTopic('dhile');
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print(message.notification);
       final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
       LocalNoti.showBigTextNotification(title:'${message.notification?.title}'.tr, body: '${message.notification?.body}'.tr,payload: message.data, fln: flutterLocalNotificationsPlugin);
     });
@@ -75,9 +76,9 @@ class LocalNoti {
       required String body,
       var payload,
       required FlutterLocalNotificationsPlugin fln}) async {
-   // NotificationModel notificationModel = notificationFromJson(jsonEncode(payload));
-   // final http.Response response = await http.get(Uri.parse('${Constant.domain}${notificationModel.image}'));
-   // final http.Response brand = await http.get(Uri.parse('${Constant.domain}${notificationModel.brand}'));
+   NotificationModel notificationModel = notificationFromJson(jsonEncode(payload));
+   final http.Response response = await http.get(Uri.parse('${Constant.domain}${notificationModel.image}'));
+   final http.Response brand = await http.get(Uri.parse('${Constant.domain}${notificationModel.brand}'));
     AndroidNotificationDetails androidPlatformChannelSpecifics =
          AndroidNotificationDetails(
       'noti',
@@ -85,10 +86,10 @@ class LocalNoti {
       playSound: true,
       importance: Importance.max,
       priority: Priority.high,
-          // styleInformation:   BigPictureStyleInformation(
-          //   ByteArrayAndroidBitmap.fromBase64String(base64Encode(response.bodyBytes)),
-          //   largeIcon: ByteArrayAndroidBitmap.fromBase64String(base64Encode(brand.bodyBytes)),
-          // )
+          styleInformation:   BigPictureStyleInformation(
+            ByteArrayAndroidBitmap.fromBase64String(base64Encode(response.bodyBytes)),
+            largeIcon: ByteArrayAndroidBitmap.fromBase64String(base64Encode(brand.bodyBytes)),
+          )
     );
 
     var not = NotificationDetails(

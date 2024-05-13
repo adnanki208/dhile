@@ -18,7 +18,6 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:page_transition/page_transition.dart';
 import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
 void main() async{
@@ -30,7 +29,6 @@ void main() async{
   await FirebaseApi().initNotifications();
   LocalNoti.initialize(flutterLocalNotificationsPlugin);
   FlutterAppBadger.removeBadge();
-  LocalNoti.showBigTextNotification(title: 'aaaa', body: 'bbbbbb', fln: flutterLocalNotificationsPlugin);
   runApp(const MyApp());
 }
 
