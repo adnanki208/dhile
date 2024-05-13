@@ -25,7 +25,7 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive,overlays: []);
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
+    // options: DefaultFirebaseOptions.currentPlatform,
   );
   await FirebaseApi().initNotifications();
   LocalNoti.initialize(flutterLocalNotificationsPlugin);
@@ -60,7 +60,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _handleMessage(RemoteMessage message) {
-    print(message.data);
+    // print(message.data);
     NotificationModel notificationModel = notificationFromJson(jsonEncode(message.data));
     Get.offAllNamed('/carNotificationDetails', arguments: [notificationModel.id]);
   }

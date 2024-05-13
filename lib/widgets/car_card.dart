@@ -213,7 +213,7 @@ class CarCard extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            SizedBox(width: 5,),
+                            const SizedBox(width: 5,),
                             SizedBox(
                               width: 40,
                               child: Hero(

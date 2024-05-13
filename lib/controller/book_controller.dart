@@ -4,6 +4,7 @@ import 'package:dhile/models/area.dart';
 import 'package:dhile/models/book.dart';
 import 'package:dhile/models/calculater.dart';
 import 'package:dhile/models/response.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -29,7 +30,7 @@ class BookController extends GetxController{
   final formKey = GlobalKey<FormState>();
 
   Rx<DateTime> start = DateTime.now().obs;
-  Rx<DateTime> end = DateTime.now().add(Duration(days: 1)).obs;
+  Rx<DateTime> end = DateTime.now().add(const Duration(days: 1)).obs;
   Rx <BookModel> bookModel=BookModel().obs;
   Rx<Calculate> calculate = Calculate().obs;
   Rxn<AreaModel> areaModel = Rxn<AreaModel>();
@@ -79,7 +80,9 @@ class BookController extends GetxController{
       end(DateTime.now().add(Duration(days: minDays.value)));
       calc();
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 
@@ -115,7 +118,9 @@ class BookController extends GetxController{
 
 
       } catch(e){
-        print(e);
+        if (kDebugMode) {
+          print(e);
+        }
       }
 
   }

@@ -244,7 +244,7 @@ class _CarDetailsPageState extends State<CarDetailsPage> {
                                     width: 20,
                                     decoration: BoxDecoration(
                                         color: outer,
-                                        borderRadius: BorderRadius.all(
+                                        borderRadius: const BorderRadius.all(
                                             Radius.circular(20)),
                                         border: Border.all(
                                             color: Constant.bgColor!))),
@@ -262,7 +262,7 @@ class _CarDetailsPageState extends State<CarDetailsPage> {
                                   decoration: BoxDecoration(
                                       color: inner,
                                       borderRadius:
-                                          BorderRadius.all(Radius.circular(20)),
+                                          const BorderRadius.all(Radius.circular(20)),
                                       border:
                                           Border.all(color: Constant.bgColor!)),
                                 ),

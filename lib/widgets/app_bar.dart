@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'dart:io' show Platform;
 
 class AppBarCustom extends StatelessWidget  implements PreferredSizeWidget{
   const AppBarCustom({
@@ -14,7 +13,7 @@ class AppBarCustom extends StatelessWidget  implements PreferredSizeWidget{
     this.back=false
   });
 
-  final    homeController;
+  final  homeController;
   final bool showFilter;
   final bool back;
   void openBottomSheet() {
@@ -481,7 +480,7 @@ class AppBarCustom extends StatelessWidget  implements PreferredSizeWidget{
         onTap: () {
           Get.offAllNamed('/home');
         },
-        child: Icon(Icons.arrow_back,color: Colors.black,),
+        child: const Icon(Icons.arrow_back,color: Colors.black,),
       ):null,
 
     );

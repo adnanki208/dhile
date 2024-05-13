@@ -1,7 +1,6 @@
 
 import 'package:dhile/api/api_service.dart';
 import 'package:dhile/controller/main_controller.dart';
-import 'package:dhile/models/faq.dart';
 import 'package:dhile/models/home.dart';
 import 'package:dhile/models/response.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';

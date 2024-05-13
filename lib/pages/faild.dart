@@ -22,7 +22,7 @@ class _FailPageState extends State<FailPage> {
   void initState() {
     super.initState();
 
-    Timer(Duration(seconds: 8), () {
+    Timer(const Duration(seconds: 8), () {
       Get.offAllNamed('/home');
     });
 

@@ -32,9 +32,4 @@ class FaqController extends GetxController {
       isLoading(false);
     }
   }
-
-  @override
-  void onInit() {
-    super.onInit();
-  }
 }

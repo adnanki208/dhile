@@ -30,7 +30,7 @@ class AppRoute {
 
       GetPage(
           name: '/',
-          page: ()=>MyApp(),
+          page: ()=>const MyApp(),
           // transition: Transition.cupertinoDialog
       ),
       GetPage(

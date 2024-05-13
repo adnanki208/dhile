@@ -1,6 +1,5 @@
 import 'package:dhile/constant.dart';
 import 'package:dhile/controller/home_controller.dart';
-import 'package:dhile/models/home.dart';
 import 'package:dhile/widgets/app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -283,7 +282,7 @@ class _CarNotificationDetailsPageState
                                                 width: 20,
                                                 decoration: BoxDecoration(
                                                     color: outer,
-                                                    borderRadius: BorderRadius.all(
+                                                    borderRadius: const BorderRadius.all(
                                                         Radius.circular(20)),
                                                     border: Border.all(
                                                         color: Constant.bgColor!))),
@@ -300,7 +299,7 @@ class _CarNotificationDetailsPageState
                                               width: 20,
                                               decoration: BoxDecoration(
                                                   color: inner,
-                                                  borderRadius: BorderRadius.all(
+                                                  borderRadius: const BorderRadius.all(
                                                       Radius.circular(20)),
                                                   border: Border.all(
                                                       color: Constant.bgColor!)),

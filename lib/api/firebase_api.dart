@@ -23,18 +23,22 @@ class FirebaseApi {
   Future<void> initNotifications() async {
 
      await _firebaseMessaging.requestPermission(
-      alert: true,
-      badge: true,
-      sound: true,
+       alert: true,
+       announcement: false,
+       badge: true,
+       carPlay: false,
+       criticalAlert: false,
+       provisional: false,
+       sound: true,
     );
-    final fCMToken = await _firebaseMessaging.getToken();
+    // final fCMToken = await _firebaseMessaging.getToken();
     // print(settings.authorizationStatus);
     // print('-------------------------------------------');
     // print(fCMToken);
     await _firebaseMessaging.subscribeToTopic('dhile');
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-      LocalNoti.showBigTextNotification(title:'${message.notification?.title}'.tr??"", body: '${message.notification?.body}'.tr??"",payload: message.data, fln: flutterLocalNotificationsPlugin);
+      LocalNoti.showBigTextNotification(title:'${message.notification?.title}'.tr, body: '${message.notification?.body}'.tr,payload: message.data, fln: flutterLocalNotificationsPlugin);
     });
     FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage event) {
@@ -49,7 +53,7 @@ class LocalNoti {
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
     var androidInitialize =
         const AndroidInitializationSettings('drawable/ic_notification');
-    var iosInitialize = DarwinInitializationSettings();
+    var iosInitialize = const DarwinInitializationSettings();
     var initializationSettings =
         InitializationSettings(android: androidInitialize, iOS: iosInitialize);
     await flutterLocalNotificationsPlugin.initialize(
