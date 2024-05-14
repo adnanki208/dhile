@@ -81,22 +81,6 @@ class _MyAppState extends State<MyApp> {
     AppRoute data = AppRoute();
     data.getRoute();
 
-
-    IOSOptions? options;
-
-    if(Platform.isIOS) {
-       options = const IOSOptions(
-          accessibility: KeychainAccessibility.first_unlock);
-    }else{
-      options=null;
-    }
-
-
-    AndroidOptions getAndroidOptions() => const AndroidOptions(
-      encryptedSharedPreferences: true,
-      // sharedPreferencesName: 'Test2',
-      // preferencesKeyPrefix: 'Test'
-    );
     return GetMaterialApp(
         localizationsDelegates: const [
           GlobalMaterialLocalizations.delegate,
@@ -129,18 +113,17 @@ class _MyAppState extends State<MyApp> {
             // HomeController homeController = HomeController();
             final String defaultLocale =
                 Platform.localeName.toString().substring(0, 2);
-            Locale localLang = await storage.read(key: 'lang', iOptions: options,aOptions: getAndroidOptions()) == null
+            Locale localLang = await storage.read(key: 'lang') == null
                 ? defaultLocale == 'ar'
                     ? const Locale('ar', 'SA')
                     : const Locale('en', 'US')
-                : await storage.read(key: 'lang', iOptions: options,aOptions: getAndroidOptions()) == 'ar'
+                : await storage.read(key: 'lang') == 'ar'
                     ? const Locale('ar', 'SA')
                     : const Locale('en', 'US');
             Get.updateLocale(localLang);
-            await storage.deleteAll(iOptions: options,aOptions: getAndroidOptions());
+            await storage.deleteAll();
             await storage.write(
-                key: "lang", value: localLang.toString().substring(0, 2), iOptions: options,aOptions: getAndroidOptions());
-
+                key: "lang", value: localLang.toString().substring(0, 2));
             // await homeController.getHome();
             return const HomePage();
           },
