@@ -18,14 +18,16 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:page_transition/page_transition.dart';
 import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
-void main() async{
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive,overlays: []);
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive, overlays: []);
   await Firebase.initializeApp(
-    // options: DefaultFirebaseOptions.currentPlatform,
-  );
+      // options: DefaultFirebaseOptions.currentPlatform,
+      );
   await FirebaseApi().initNotifications();
   LocalNoti.initialize(flutterLocalNotificationsPlugin);
   FlutterAppBadger.removeBadge();
@@ -40,12 +42,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   Future<void> setupInteractedMessage() async {
     // Get any messages which caused the application to open from
     // a terminated state.
     RemoteMessage? initialMessage =
-    await FirebaseMessaging.instance.getInitialMessage();
+        await FirebaseMessaging.instance.getInitialMessage();
 
     // If the message also contains a data property with a "type" of "chat",
     // navigate to a chat screen
@@ -60,25 +61,42 @@ class _MyAppState extends State<MyApp> {
 
   void _handleMessage(RemoteMessage message) {
     // print(message.data);
-    NotificationModel notificationModel = notificationFromJson(jsonEncode(message.data));
-    Get.offAllNamed('/carNotificationDetails', arguments: [notificationModel.id]);
+    NotificationModel notificationModel =
+        notificationFromJson(jsonEncode(message.data));
+    Get.offAllNamed('/carNotificationDetails',
+        arguments: [notificationModel.id]);
   }
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     setupInteractedMessage();
   }
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
     FlutterSecureStorage storage = const FlutterSecureStorage();
-
 
     AppRoute data = AppRoute();
     data.getRoute();
 
+
+    IOSOptions? options;
+
+    if(Platform.isIOS) {
+       options = const IOSOptions(
+          accessibility: KeychainAccessibility.first_unlock);
+    }else{
+      options=null;
+    }
+
+
+    AndroidOptions getAndroidOptions() => const AndroidOptions(
+      encryptedSharedPreferences: true,
+      // sharedPreferencesName: 'Test2',
+      // preferencesKeyPrefix: 'Test'
+    );
     return GetMaterialApp(
         localizationsDelegates: const [
           GlobalMaterialLocalizations.delegate,
@@ -86,41 +104,49 @@ class _MyAppState extends State<MyApp> {
           GlobalCupertinoLocalizations.delegate,
         ],
         initialRoute: '/',
-        debugShowCheckedModeBanner  : false,
+        debugShowCheckedModeBanner: false,
         defaultTransition: Transition.zoom,
-        getPages:  data.routeArray,
+        getPages: data.routeArray,
         translations: Lang(),
-        locale: const Locale('en','US'),
-        fallbackLocale: const Locale('en','US'),
-       theme: ThemeData(
-         fontFamily: 'din',
-         primaryColorLight: Constant.mainColor,
-         primaryColor: Constant.mainColor,
-           textSelectionTheme: TextSelectionThemeData(
-               selectionColor: Constant.mainColor,
-           cursorColor: Constant.mainColor,selectionHandleColor: Constant.mainColor),
-       ),
+        locale: const Locale('en', 'US'),
+        fallbackLocale: const Locale('en', 'US'),
+        theme: ThemeData(
+          fontFamily: 'din',
+          primaryColorLight: Constant.mainColor,
+          primaryColor: Constant.mainColor,
+          textSelectionTheme: TextSelectionThemeData(
+              selectionColor: Constant.mainColor,
+              cursorColor: Constant.mainColor,
+              selectionHandleColor: Constant.mainColor),
+        ),
         themeMode: ThemeMode.light,
         initialBinding: HomeControllerBinding(),
         title: "AL-Dhile",
-        home:AnimatedSplashScreen.withScreenFunction(
+        home: AnimatedSplashScreen.withScreenFunction(
           splashIconSize: 300,
           splash: 'assets/imgs/intro.gif',
-          screenFunction: () async{
+          screenFunction: () async {
             // HomeController homeController = HomeController();
-            final String defaultLocale = Platform.localeName.toString().substring(0,2);
-          Locale localLang= await storage.read(key: 'lang')==null ?defaultLocale=='ar'?const Locale('ar','SA'): const Locale('en','US'):await storage.read(key: 'lang')=='ar'? const Locale('ar','SA'):const Locale('en','US');
+            final String defaultLocale =
+                Platform.localeName.toString().substring(0, 2);
+            Locale localLang = await storage.read(key: 'lang', iOptions: options,aOptions: getAndroidOptions()) == null
+                ? defaultLocale == 'ar'
+                    ? const Locale('ar', 'SA')
+                    : const Locale('en', 'US')
+                : await storage.read(key: 'lang', iOptions: options,aOptions: getAndroidOptions()) == 'ar'
+                    ? const Locale('ar', 'SA')
+                    : const Locale('en', 'US');
             Get.updateLocale(localLang);
-            await storage.deleteAll();
-            await storage.write(key: "lang", value:localLang.toString().substring(0,2));
+            await storage.deleteAll(iOptions: options,aOptions: getAndroidOptions());
+            await storage.write(
+                key: "lang", value: localLang.toString().substring(0, 2), iOptions: options,aOptions: getAndroidOptions());
+
             // await homeController.getHome();
-            return   const HomePage();
+            return const HomePage();
           },
           backgroundColor: Colors.white,
           splashTransition: SplashTransition.fadeTransition,
           pageTransitionType: PageTransitionType.fade,
-        )
-    );
+        ));
   }
 }
-

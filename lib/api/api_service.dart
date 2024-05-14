@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:dhile/constant.dart';
 import 'package:dhile/models/book.dart';
 import 'package:dhile/models/calculater.dart';
@@ -18,9 +19,27 @@ class ApiService {
     'Content-Type': 'application/json'
   };
 
+
+
+
+
+  AndroidOptions getAndroidOptions() => const AndroidOptions(
+  encryptedSharedPreferences: true,
+  // sharedPreferencesName: 'Test2',
+  // preferencesKeyPrefix: 'Test'
+  );
+  getIosOption(){
+    if(Platform.isIOS) {
+      const IOSOptions(
+          accessibility: KeychainAccessibility.first_unlock);
+    }
+  }
+
+
    Future<ResponseModel> fetchHome() async {
     try {
-      String? sr = await storage.read(key: 'home');
+
+      String? sr = await storage.read(key: 'home', iOptions: getIosOption(),aOptions: getAndroidOptions());
       if (sr == null) {
         // print(headers);
         var res = await client
@@ -28,7 +47,7 @@ class ApiService {
 
         if (res.statusCode == 200) {
           var jsonString = res.body;
-          await storage.write(key: "home", value: jsonString);
+          await storage.write(key: "home", value: jsonString, iOptions: getIosOption(),aOptions: getAndroidOptions());
           return responseModelFromJson(jsonString);
         } else {
           return errorResponse(res.statusCode);
