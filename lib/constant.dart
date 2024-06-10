@@ -13,5 +13,5 @@ class Constant {
   static double iconSize = Get.width<=600?25:35;
   static double fontSize = Get.width<=600?15:20;
 
-  static String domain = 'https://phplaravel-548447-4346140.cloudwaysapps.com/';
+  static String domain = 'https://www.aldhilerentacar.com/';
 }
