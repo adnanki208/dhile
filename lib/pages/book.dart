@@ -6,6 +6,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:html/parser.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl_phone_field/country_picker_dialog.dart';
 import 'dart:io' show Platform;
@@ -482,112 +483,7 @@ class _BookPageState extends State<BookPage> {
                           const SizedBox(
                             height: 20,
                           ),
-                          Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    'PaymentMethod'.tr,
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                        color: Constant.iconColor,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Transform.scale(
-                                    scale: 1,
-                                    child: Radio(
-                                      fillColor: MaterialStatePropertyAll(
-                                          bookController.bookModel.value
-                                                      .rentalType ==
-                                                  0
-                                              ? Constant.mainColor
-                                              : Constant.dark),
-                                      value: 0,
-                                      groupValue: bookController
-                                          .bookModel.value.rentalType,
-                                      onChanged: (value) {
-                                        bookController.bookModel.update((val) {
-                                          val?.rentalType = value;
-                                        });
-                                        // bookController.calc();
-                                      },
-                                    ),
-                                  ),
-                                  Text('PayLater'.tr)
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Transform.scale(
-                                    scale: 1,
-                                    child: Radio(
-                                      fillColor: MaterialStatePropertyAll(
-                                          bookController.bookModel.value
-                                                      .rentalType ==
-                                                  1
-                                              ? Constant.mainColor
-                                              : Constant.dark),
-                                      value: 1,
-                                      groupValue: bookController
-                                          .bookModel.value.rentalType,
-                                      onChanged: (value) {
-                                        bookController.bookModel.update((val) {
-                                          val?.rentalType = value;
-                                        });
-                                        // bookController.calc();
-                                      },
-                                    ),
-                                  ),
-                                  Text('PayNow'.tr)
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    'DiscountCode'.tr,
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                        color: Constant.iconColor,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              TextFormField(
-                                textInputAction: TextInputAction.next,
-                                onChanged: (value) {
-                                  bookController.calculate.update((val) {
-                                    val?.code = value;
-                                  });
-                                  bookController.calc();
-                                },
-                                decoration: InputDecoration(
-                                    hintText: 'EnterCode'.tr,
-                                    border: const UnderlineInputBorder(
-                                        borderSide: BorderSide.none,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10))),
-                                    filled: true,
-                                    fillColor: const Color(0xffeeeeee)),
-                                onSaved: (newValue) {
-                                  bookController.bookModel.update((val) {
-                                    val?.code = newValue;
-                                  });
-                                },
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                            ],
-                          ),
+                       
                           const SizedBox(
                             height: 20,
                           ),
@@ -907,10 +803,14 @@ class _BookPageState extends State<BookPage> {
                           ],
                         ),
                         onTap: () {
+
+
+                          var document = parse('TermContent'.tr);
+
                           Get.defaultDialog(
                             content: Flexible(
                               child: SingleChildScrollView(
-                                child: Text('TermContent'.tr,
+                                child: Text(document.documentElement!.text,
                                    ),
                               ),
                             ),

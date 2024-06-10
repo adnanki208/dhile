@@ -56,22 +56,12 @@ class _HomePageState extends State<HomePage> {
                   );
                 } else {
                   if (homeController.isFail.value == false) {
-                    if(homeController.cars.value!=null) {
+                    if(homeController.cars.value!=null && homeController.cars.value?.cars.length!=0) {
                       return Padding(
                         padding: const EdgeInsets.only(top: 5, left: 15, right: 15),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-
-                            // Row(
-                            //   children: [
-                            //     Text('Find Your Cars!'.tr,
-                            //         style: TextStyle(fontSize: 20)),
-                            //   ],
-                            // ),
-                            // SizedBox(
-                            //   height: 10,
-                            // ),
                             LimitedBox(
                                 maxHeight: 80,
                                 child: ListView.builder(

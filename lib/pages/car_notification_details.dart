@@ -13,7 +13,6 @@ import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:readmore/readmore.dart';
 import 'package:html/parser.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:dhile/widgets/car_card.dart';
 import 'dart:io' show Platform;
 
 class HexColor extends Color {
@@ -44,7 +43,7 @@ class _CarNotificationDetailsPageState
 
   Future getData() async {
     await homeController.getCarById(widget.id);
-    await homeController.getCarFeaturesById(widget.id);
+    await homeController.getCarFeaturesById2(widget.id);
   }
 
   @override
@@ -808,34 +807,6 @@ class _CarNotificationDetailsPageState
                                                 const SizedBox(
                                                   height: 10,
                                                 ),
-                                                if (homeController.cars.value != null)
-                                                  Row(
-                                                    children: [
-                                                      Text(
-                                                        'Similar Cars'.tr,
-                                                        style: TextStyle(
-                                                            color: Constant.iconColor,
-                                                            fontSize: 22),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                                if (homeController.cars.value != null)
-                                                  CarCard(
-                                                    homeController: homeController,
-                                                    shrinkWrap: true,
-                                                  ),
-                                                if (homeController.cars.value == null)
-                                                  Center(
-                                                    child: Text(
-                                                      'No Cars Found!'.tr,
-                                                      style: TextStyle(
-                                                          color: Constant.dark,
-                                                          fontSize: 20),
-                                                    ),
-                                                  )
                                               ],
                                             );
                                           } else {

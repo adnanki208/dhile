@@ -174,10 +174,30 @@ class HomeController extends GetxController {
       print(e);
     }
   }
+  Future<void> getCarFeaturesById2(String id) async {
+    try {
+        isLoading3(true);
+      response = await ApiService().getCarFeaturesById(id);
+      if (response.code == 1 || response.code == -2) {
+        whats= await storage.read(key: 'whatsapp');
+        phone= await storage.read(key: 'phone');
+        features(FeaturesModel.fromJson(response.data));
+        isFail3(false);
+        isLoading3(false);
+      } else {
+        mainController.responseCheck(response, getCarFeaturesById(id));
+        isFail3(true);
+        isLoading3(false);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
   Future<void> getCarById(String id) async {
     try {
         isLoading(true);
       response = await ApiService().getCarById(id);
+      // print('aaa $id');
       if (response.code == 1) {
         cars (CarsModel.fromJson(response.data));
         isFail(false);
@@ -255,6 +275,10 @@ class HomeController extends GetxController {
       } else {
         isFail(false);
         cars (CarsModel.fromJson(response.data));
+        // if(cars.value?.cars.length ==0){
+        //   cars(null);
+        //   print(cars.value?.cars[0]);
+        // }
         // bodies= BodiesModel.fromJson(response.data);
       }
     } finally {
