@@ -4,9 +4,9 @@ import 'package:dhile/controller/book_controller.dart';
 import 'package:dhile/models/home.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:html/parser.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl_phone_field/country_picker_dialog.dart';
 import 'dart:io' show Platform;
@@ -805,12 +805,12 @@ class _BookPageState extends State<BookPage> {
                         onTap: () {
 
 
-                          var document = parse('TermContent'.tr);
+                          var document = 'TermContent'.tr;
 
                           Get.defaultDialog(
                             content: Flexible(
                               child: SingleChildScrollView(
-                                child: Text(document.documentElement!.text,
+                                child: HtmlWidget(document,
                                    ),
                               ),
                             ),
