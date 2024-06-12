@@ -19,15 +19,12 @@ import 'package:page_transition/page_transition.dart';
 import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive, overlays: []);
-  await Firebase.initializeApp(
-      // options: DefaultFirebaseOptions.currentPlatform,
-      );
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive,overlays: []);
+  await Firebase.initializeApp();
   await FirebaseApi().initNotifications();
   LocalNoti.initialize(flutterLocalNotificationsPlugin);
   FlutterAppBadger.removeBadge();
@@ -46,7 +43,7 @@ class _MyAppState extends State<MyApp> {
     // Get any messages which caused the application to open from
     // a terminated state.
     RemoteMessage? initialMessage =
-        await FirebaseMessaging.instance.getInitialMessage();
+    await FirebaseMessaging.instance.getInitialMessage();
 
     // If the message also contains a data property with a "type" of "chat",
     // navigate to a chat screen
