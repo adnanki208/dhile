@@ -73,7 +73,7 @@ class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    FlutterSecureStorage storage = const FlutterSecureStorage();
+
 
     AppRoute data = AppRoute();
     data.getRoute();
@@ -107,7 +107,7 @@ class _MyAppState extends State<MyApp> {
           splashIconSize: 300,
           splash: 'assets/imgs/intro.gif',
           screenFunction: () async {
-            // HomeController homeController = HomeController();
+            FlutterSecureStorage storage = const FlutterSecureStorage();
             final String defaultLocale =
                 Platform.localeName.toString().substring(0, 2);
             Locale localLang = await storage.read(key: 'lang') == null
