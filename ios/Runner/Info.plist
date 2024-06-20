@@ -8,6 +8,8 @@
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>NSMicrophoneUsageDescription</key>
+    <string>This app does not require access to the microphone.</string>
 	<key>CFBundleDisplayName</key>
 	<string>Dhile</string>
 	<key>CFBundleExecutable</key>
