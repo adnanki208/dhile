@@ -6,6 +6,8 @@ import 'package:http/http.dart' as http;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
+
+@pragma('vm:entry-point')
 Future<void> handleBackgroundMessage(RemoteMessage message) async {
   // final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
   // LocalNoti.showBigTextNotification(title: message.notification?.title??'', body: message.notification?.body??'', fln: flutterLocalNotificationsPlugin);
@@ -16,12 +18,11 @@ Future<void> handleBackgroundMessage(RemoteMessage message) async {
 
 
 class FirebaseApi {
-  final _firebaseMessaging = FirebaseMessaging.instance;
 
 
-  Future<void> initNotifications() async {
+  Future<void> initNotifications(firebaseMessaging) async {
 
-     await _firebaseMessaging.requestPermission(
+     await firebaseMessaging.requestPermission(
        alert: true,
        announcement: false,
        badge: true,
@@ -30,21 +31,22 @@ class FirebaseApi {
        provisional: false,
        sound: true,
     );
-    // final fCMToken = await _firebaseMessaging.getToken();
+    // final fCMToken = await firebaseMessaging.getToken();
     // print(settings.authorizationStatus);
     // print('-------------------------------------------');
     // print(fCMToken);
-    await _firebaseMessaging.subscribeToTopic('dhile');
+    await firebaseMessaging.subscribeToTopic('dhile');
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
       // print(message.data);
       LocalNoti.showBigTextNotification(title:'${message.notification?.title}'.tr, body: '${message.notification?.body}'.tr,payload: message.data, fln: flutterLocalNotificationsPlugin);
     });
+     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage event) {
+       NotificationModel notificationModel = notificationFromJson(jsonEncode(event.data));
+       Get.offAllNamed('/carNotificationDetails',arguments:[notificationModel.id]);
+     });
     FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage event) {
-      NotificationModel notificationModel = notificationFromJson(jsonEncode(event.data));
-      Get.offAllNamed('/carNotificationDetails',arguments:[notificationModel.id]);
-    });
+
     }
 }
 

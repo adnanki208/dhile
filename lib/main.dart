@@ -12,20 +12,25 @@ import 'package:flutter/services.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:page_transition/page_transition.dart';
-import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
+
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+final firebaseMessaging = FirebaseMessaging.instance;
 void main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive,overlays: []);
   await Firebase.initializeApp();
-  await FirebaseApi().initNotifications();
+
+
+  await FirebaseApi().initNotifications(firebaseMessaging);
+
+
   LocalNoti.initialize(flutterLocalNotificationsPlugin);
   FlutterAppBadger.removeBadge();
   runApp(const MyApp());
@@ -43,7 +48,7 @@ class _MyAppState extends State<MyApp> {
     // Get any messages which caused the application to open from
     // a terminated state.
     RemoteMessage? initialMessage =
-    await FirebaseMessaging.instance.getInitialMessage();
+    await firebaseMessaging.getInitialMessage();
 
     // If the message also contains a data property with a "type" of "chat",
     // navigate to a chat screen
@@ -103,27 +108,10 @@ class _MyAppState extends State<MyApp> {
         themeMode: ThemeMode.light,
         initialBinding: HomeControllerBinding(),
         title: "AL-Dhile",
-        home: AnimatedSplashScreen.withScreenFunction(
+        home: AnimatedSplashScreen(
           splashIconSize: 300,
           splash: 'assets/imgs/intro.gif',
-          screenFunction: () async {
-            FlutterSecureStorage storage = const FlutterSecureStorage();
-            final String defaultLocale =
-                Platform.localeName.toString().substring(0, 2);
-            Locale localLang = await storage.read(key: 'lang') == null
-                ? defaultLocale == 'ar'
-                    ? const Locale('ar', 'SA')
-                    : const Locale('en', 'US')
-                : await storage.read(key: 'lang') == 'ar'
-                    ? const Locale('ar', 'SA')
-                    : const Locale('en', 'US');
-            Get.updateLocale(localLang);
-            await storage.deleteAll();
-            await storage.write(
-                key: "lang", value: localLang.toString().substring(0, 2));
-            // await homeController.getHome();
-            return const HomePage();
-          },
+          nextScreen:const HomePage(),
           backgroundColor: Colors.white,
           splashTransition: SplashTransition.fadeTransition,
           pageTransitionType: PageTransitionType.fade,

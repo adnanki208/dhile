@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dhile/constant.dart';
 import 'package:dhile/controller/home_controller.dart';
 import 'package:dhile/widgets/app_bar.dart';
@@ -5,6 +7,7 @@ import 'package:dhile/widgets/bottom_nav.dart';
 import 'package:dhile/widgets/car_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -21,6 +24,23 @@ class _HomePageState extends State<HomePage> {
   HomeController homeController = HomeController();
 
   Future getData() async {
+
+    FlutterSecureStorage storage = const FlutterSecureStorage();
+    final String defaultLocale =
+    Platform.localeName.toString().substring(0, 2);
+    Locale localLang = await storage.read(key: 'lang') == null
+        ? defaultLocale == 'ar'
+        ? const Locale('ar', 'SA')
+        : const Locale('en', 'US')
+        : await storage.read(key: 'lang') == 'ar'
+        ? const Locale('ar', 'SA')
+        : const Locale('en', 'US');
+    Get.updateLocale(localLang);
+    await storage.deleteAll();
+    await storage.write(
+        key: "lang", value: localLang.toString().substring(0, 2));
+
+
     await homeController.getHome();
     // print(homeController.data.cars[0].carType.name);
   }
