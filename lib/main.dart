@@ -25,14 +25,7 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive,overlays: []);
-  await Firebase.initializeApp();
 
-
-  await FirebaseApi().initNotifications(firebaseMessaging);
-
-
-  LocalNoti.initialize(flutterLocalNotificationsPlugin);
-  FlutterAppBadger.removeBadge();
   runApp(const MyApp());
 }
 
@@ -72,14 +65,13 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    setupInteractedMessage();
   }
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
 
-
+    FlutterAppBadger.removeBadge();
     AppRoute data = AppRoute();
     data.getRoute();
 
@@ -108,10 +100,18 @@ class _MyAppState extends State<MyApp> {
         themeMode: ThemeMode.light,
         initialBinding: HomeControllerBinding(),
         title: "AL-Dhile",
-        home: AnimatedSplashScreen(
+        home: AnimatedSplashScreen.withScreenFunction(
           splashIconSize: 300,
           splash: 'assets/imgs/intro.gif',
-          nextScreen:const HomePage(),
+          screenFunction: () async{
+            await Firebase.initializeApp();
+            await FirebaseApi().initNotifications(firebaseMessaging);
+            LocalNoti.initialize(flutterLocalNotificationsPlugin);
+            setupInteractedMessage();
+
+            return const HomePage();
+          },
+          // nextScreen:const HomePage(),
           backgroundColor: Colors.white,
           splashTransition: SplashTransition.fadeTransition,
           pageTransitionType: PageTransitionType.fade,
