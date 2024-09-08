@@ -87,7 +87,7 @@ class _CarNotificationDetailsPageState
                   var outer = HexColor(homeController.cars.value!.cars[0].outerColor);
                   if (homeController.cars.value!.cars[0].oldDailyPrice != null) {
                     oldDaily = (((homeController.cars.value!.cars[0].oldDailyPrice! -
-                        homeController.cars.value!.cars[0].dailyPrice) /
+                        homeController.cars.value!.cars[0].dailyPrice!) /
                         homeController.cars.value!.cars[0].oldDailyPrice!) *
                         100)
                         .ceil();
@@ -203,7 +203,7 @@ class _CarNotificationDetailsPageState
                                                   Radius.circular(50))),
                                           child: Text(
                                             homeController
-                                                .cars.value!.cars[0].bodiesApi.title,
+                                                .cars.value!.cars[0].typesApi.title,
                                             style: const TextStyle(
                                                 color: Colors.white, fontSize: 14),
                                           ),

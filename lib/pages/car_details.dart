@@ -5,9 +5,11 @@ import 'package:dhile/widgets/app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
@@ -58,14 +60,13 @@ class _CarDetailsPageState extends State<CarDetailsPage> {
   Widget build(BuildContext context) {
     late final gas = ['Electric'.tr, 'Petrol'.tr, 'Diesel'.tr, 'Hybrid'.tr];
     late final transmission = ['manual'.tr, 'auto'.tr];
-
     List<String> image = widget.car.imgs.split(',');
     int oldDaily = 0;
     int oldMonthly = 0;
     var inner = HexColor(widget.car.innerColor);
     var outer = HexColor(widget.car.outerColor);
     if (widget.car.oldDailyPrice != null) {
-      oldDaily = (((widget.car.oldDailyPrice! - widget.car.dailyPrice) /
+      oldDaily = (((widget.car.oldDailyPrice! - widget.car.dailyPrice!) /
                   widget.car.oldDailyPrice!) *
               100)
           .ceil();
@@ -76,6 +77,7 @@ class _CarDetailsPageState extends State<CarDetailsPage> {
               100)
           .ceil();
     }
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -173,7 +175,7 @@ class _CarDetailsPageState extends State<CarDetailsPage> {
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(50))),
                               child: Text(
-                                widget.car.bodiesApi.title,
+                                widget.car.typesApi.title,
                                 style: const TextStyle(
                                     color: Colors.white, fontSize: 14),
                               ),
@@ -295,6 +297,66 @@ class _CarDetailsPageState extends State<CarDetailsPage> {
                             // This next line does the trick.
                             scrollDirection: Axis.horizontal,
                             children: <Widget>[
+                              if(widget.car.kmPrice!=null)
+                              Animate(
+                                delay: 200.ms,
+                                effects: const [FadeEffect()],
+                                child: Card(
+                                  elevation: 0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(10),
+                                    ),
+                                    side: BorderSide(
+                                        color: Constant.iconColor!, width: 1.0),
+                                  ),
+                                  color: Colors.white,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        width: 100,
+                                        child: SvgPicture.asset(
+                                          'assets/imgs/i9.svg',
+                                          color: Constant.iconColor,
+                                          width: 30,
+                                        ),
+                                      ),
+                                      Text(widget.car.kmPrice.toString())
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              if(widget.car.engin!=null)
+                                Animate(
+                                  delay: 200.ms,
+                                  effects: const [FadeEffect()],
+                                  child: Card(
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(10),
+                                      ),
+                                      side: BorderSide(
+                                          color: Constant.iconColor!, width: 1.0),
+                                    ),
+                                    color: Colors.white,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        SizedBox(
+                                          width: 100,
+                                          child: SvgPicture.asset(
+                                            'assets/imgs/i10.svg',
+                                            color: Constant.iconColor,
+                                            width: 30,
+                                          ),
+                                        ),
+                                        Text(widget.car.engin.toString())
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               Animate(
                                 delay: 200.ms,
                                 effects: const [FadeEffect()],
@@ -464,109 +526,208 @@ class _CarDetailsPageState extends State<CarDetailsPage> {
                           decoration: BoxDecoration(
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(10)),
-                              color: Constant.bgColor),
+                              color: Constant.bgGrayColor),
                           child: IntrinsicHeight(
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: widget.car.monthlyPrice == null
-                                  ? MainAxisAlignment.center
-                                  : MainAxisAlignment.spaceAround,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    oldDaily != 0
-                                        ? Text(
-                                            '${'before'.tr} ${widget.car.oldDailyPrice}',
-                                            style: TextStyle(
-                                                decoration:
-                                                    TextDecoration.lineThrough,
-                                                color: Constant.iconColor,
-                                                decorationColor:
-                                                    Constant.iconColor),
-                                          )
-                                        : const SizedBox(),
-                                    Column(
-                                      children: [
-                                        Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.end,
-                                          children: [
-                                            Text(
-                                                widget.car.dailyPrice
-                                                    .toString(),
-                                                style: TextStyle(
-                                                    color: Constant.mainColor,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20)),
-                                            Text('AED'.tr,
-                                                style: TextStyle(
-                                                    color: Constant.mainColor,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20)),
-                                            Text(
-                                              'perDay'.tr,
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                widget.car.monthlyPrice == null
-                                    ? Container()
-                                    : const VerticalDivider(
-                                        color: Colors.grey,
-                                        thickness: 1,
+                                if (widget.car.dailyPrice !=null)
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      oldDaily != 0
+                                          ? Text(
+                                        '${'AED'.tr} ${widget.car.oldDailyPrice}',
+                                        style: const TextStyle(
+                                            decoration:
+                                            TextDecoration.lineThrough,
+                                            color: Color(0xffFF4B4B),
+                                            decorationColor:
+                                            Color(0xffFF4B4B)),
+                                      )
+                                          : const SizedBox(
+                                        height: 20,
                                       ),
-                                widget.car.monthlyPrice == null
-                                    ? Container()
-                                    : Column(
+                                      Row(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        CrossAxisAlignment.end,
                                         children: [
-                                          oldMonthly != 0
-                                              ? Text(
-                                                  '${'before'.tr} ${widget.car.oldMonthlyPrice}',
-                                                  style: TextStyle(
-                                                      decoration: TextDecoration
-                                                          .lineThrough,
-                                                      color: Constant.iconColor,
-                                                      decorationColor:
-                                                          Constant.iconColor),
-                                                )
-                                              : const SizedBox(),
-                                          Column(
-                                            children: [
-                                              Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.end,
-                                                children: [
-                                                  Text(
-                                                      widget.car.monthlyPrice
-                                                          .toString(),
-                                                      style: TextStyle(
-                                                          color: Constant
-                                                              .mainColor,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 20)),
-                                                  Text('AED'.tr,
-                                                      style: TextStyle(
-                                                          color: Constant
-                                                              .mainColor,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 20)),
-                                                  Text(
-                                                    'perMont'.tr,
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
+                                          Text(
+                                              '${widget.car.dailyPrice.toString()}',
+                                              style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 18)),
+                                          Text(' ${'AED'.tr}',
+                                              style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 16)),
+                                          Text(
+                                            'perDay'.tr,
+                                            style: const TextStyle(
+                                                color: Color(0Xff3B9D3B)),
                                           ),
                                         ],
                                       ),
+                                      Row(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 5.0),
+                                            child: Icon(
+                                              FontAwesomeIcons.road,
+                                              color: Constant.mainColor,
+                                              size: 14,
+                                            ),
+                                          ),
+                                          Text(
+                                              ' ${widget.car.dailyKm} ${'Km'.tr}',
+                                              style: TextStyle(
+                                                  color: Constant.mainColor,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 16)),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                if (widget.car.weaklyPrice !=
+                                    null)
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      widget.car.oldWeaklyPrice != 0
+                                          ?  Text(
+                                        '${'AED'.tr} ${widget.car.oldWeaklyPrice}',
+                                        style: const TextStyle(
+                                            decoration:
+                                            TextDecoration.lineThrough,
+                                            color: Color(0xffFF4B4B),
+                                            decorationColor:
+                                            Color(0xffFF4B4B)),
+                                      )
+                                          : const SizedBox(
+                                        height: 20,
+                                      ),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                            children: [
+                                              Text(
+                                                 widget.car.weaklyPrice
+                                                      .toString(),
+                                                  style: const TextStyle(
+                                                      color: Colors.black,
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 18)),
+                                              Text(' ${'AED'.tr}',
+                                                  style: const TextStyle(
+                                                      color: Colors.black,
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 16)),
+                                              Text(
+                                                'perWeek'.tr,
+                                                style: const TextStyle(
+                                                    color: Color(0Xff3B9D3B)),
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 5.0),
+                                                child: Icon(
+                                                  FontAwesomeIcons.road,
+                                                  color: Constant.mainColor,
+                                                  size: 14,
+                                                ),
+                                              ),
+                                              Text(
+                                                  ' ${widget.car.weaklyPrice} ${'Km'.tr}',
+                                                  style: TextStyle(
+                                                      color: Constant.mainColor,
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 16)),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                if (widget.car.monthlyPrice !=
+                                    null)
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      oldMonthly != 0
+                                          ?  Text(
+                                        '${'AED'.tr} ${widget.car.oldMonthlyPrice}',
+                                        style: const TextStyle(
+                                            decoration:
+                                            TextDecoration.lineThrough,
+                                            color: Color(0xffFF4B4B),
+                                            decorationColor:
+                                            Color(0xffFF4B4B)),
+                                      )
+                                          : const SizedBox(
+                                        height: 20,
+                                      ),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                            children: [
+                                              Text(
+                                                 widget.car.monthlyPrice
+                                                      .toString(),
+                                                  style: const TextStyle(
+                                                      color: Colors.black,
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 18)),
+                                              Text(' ${'AED'.tr}',
+                                                  style: const TextStyle(
+                                                      color: Colors.black,
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 16)),
+                                              Text(
+                                                'perMont'.tr,
+                                                style: const TextStyle(
+                                                    color: Color(0Xff3B9D3B)),
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 5.0),
+                                                child: Icon(
+                                                  FontAwesomeIcons.road,
+                                                  color: Constant.mainColor,
+                                                  size: 14,
+                                                ),
+                                              ),
+                                              Text(
+                                                  ' ${widget.car.dailyKm} ${'Km'.tr}',
+                                                  style: TextStyle(
+                                                      color: Constant.mainColor,
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 16)),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                               ],
                             ),
                           ),
@@ -586,14 +747,61 @@ class _CarDetailsPageState extends State<CarDetailsPage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 5.0),
-                                  child: Text(widget.car.offer!,style: const TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(bottom: 5.0),
+                                    child: Text(widget.car.offer!,style: const TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+                                  ),
                                 ),
                               ],
                             ),
                           ),
                         if (widget.car.offer != null)
+                          const SizedBox(
+                            height: 15,
+                          ),
+
+
+
+
+
+
+                        if (widget.car.note != null)
+                        Row(
+                          children: [
+                            Text(
+                              'Special Note'.tr,
+                              style: TextStyle(
+                                  color: Constant.iconColor, fontSize: 22),
+                            ),
+                          ],
+                        ),
+                        if (widget.car.note != null)
+                          const SizedBox(
+                            height: 15,
+                          ),
+                        if (widget.car.note != null)
+                          Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration:  BoxDecoration(
+                              color: Constant.bgGrayColor,
+                              borderRadius:
+                              const BorderRadius.all(Radius.circular(10)),
+
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(bottom: 5.0),
+                                    child: Text(widget.car.note!,style: const TextStyle(color: Colors.black,),),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        if (widget.car.note != null)
                           const SizedBox(
                             height: 15,
                           ),

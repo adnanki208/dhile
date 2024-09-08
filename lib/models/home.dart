@@ -6,7 +6,7 @@ Home homeFromJson(String str) => Home.fromJson(json.decode(str));
 class Home {
   int maxPriceDaily;
   int maxPriceMonthly;
-  List<Brand> carBody;
+  // List<Brand> carBody;
   List<Brand> carType;
   List<Car> cars;
   List<Brand> brands;
@@ -16,7 +16,7 @@ class Home {
   Home({
     required this.maxPriceDaily,
     required this.maxPriceMonthly,
-    required this.carBody,
+    // required this.carBody,
     required this.carType,
     required this.cars,
     required this.brands,
@@ -27,7 +27,7 @@ class Home {
   factory Home.fromJson(Map<String, dynamic> json) => Home(
     maxPriceDaily: json["max-price-daily"],
     maxPriceMonthly: json["max-price-monthly"],
-    carBody: List<Brand>.from(json["car-body"].map((x) => Brand.fromJson(x))),
+    // carBody: List<Brand>.from(json["car-body"].map((x) => Brand.fromJson(x))),
     carType: List<Brand>.from(json["car-type"].map((x) => Brand.fromJson(x))),
     cars: List<Car>.from(json["cars"].map((x) => Car.fromJson(x))),
     brands: List<Brand>.from(json["brands"].map((x) => Brand.fromJson(x))),
@@ -61,17 +61,17 @@ class TypeModel {
     carType: List<Brand>.from(json["car-type"].map((x) => Brand.fromJson(x))),
   );
 }
-class BodyModel {
-  List<Brand> carBody;
-
-  BodyModel({
-    required this.carBody,
-  });
-
-  factory BodyModel.fromJson(Map<String, dynamic> json) => BodyModel(
-    carBody: List<Brand>.from(json["car-body"].map((x) => Brand.fromJson(x))),
-  );
-}
+// class BodyModel {
+//   List<Brand> carBody;
+//
+//   BodyModel({
+//     required this.carBody,
+//   });
+//
+//   factory BodyModel.fromJson(Map<String, dynamic> json) => BodyModel(
+//     carBody: List<Brand>.from(json["car-body"].map((x) => Brand.fromJson(x))),
+//   );
+// }
 
 class Brand {
   int id;
@@ -136,11 +136,12 @@ class Car {
   int orderNumber;
   int typeId;
   int brandId;
-  int bodyId;
+  // int bodyId;
   int minDays;
   String model;
   String? offer;
   String description;
+  String? note;
   int year;
   String innerColor;
   String outerColor;
@@ -149,21 +150,29 @@ class Car {
   int doors;
   int bags;
   int gas;
+  String? engin;
   String imgs;
   num? oldDailyPrice;
-  num dailyPrice;
+  num? dailyPrice;
   num? oldMonthlyPrice;
   num? monthlyPrice;
+  num? weaklyPrice;
+  num? oldWeaklyPrice;
+  num? deposit;
+  String? dailyKm;
+  String? weaklyKm;
+  String? monthlyKm;
+  String? kmPrice;
   Brand brandsApi;
   Brand typesApi;
-  Brand bodiesApi;
+  // Brand bodiesApi;
 
   Car({
     required this.id,
     required this.orderNumber,
     required this.typeId,
     required this.brandId,
-    required this.bodyId,
+    // required this.bodyId,
     required this.model,
     required this.minDays,
      this.offer,
@@ -178,12 +187,21 @@ class Car {
     required this.bags,
     required this.imgs,
      this.oldDailyPrice,
-    required this.dailyPrice,
+     this.dailyPrice,
      this.oldMonthlyPrice,
      this.monthlyPrice,
+     this.weaklyPrice,
+     this.oldWeaklyPrice,
+     this.dailyKm,
+     this.weaklyKm,
+     this.monthlyKm,
+     this.deposit,
+     this.note,
+     this.engin,
+     this.kmPrice,
     required this.brandsApi,
     required this.typesApi,
-    required this.bodiesApi,
+    // required this.bodiesApi,
   });
 
   factory Car.fromJson(Map<String, dynamic> json) => Car(
@@ -191,10 +209,11 @@ class Car {
     orderNumber: json["order_number"],
     typeId: json["type_id"],
     brandId: json["brand_id"],
-    bodyId: json["body_id"],
+    // bodyId: json["body_id"],
     minDays: json["min_days"],
     model: json["model"],
     offer: json["offer"],
+    note: json["note"],
     description: json["description"],
     year: json["year"],
     innerColor: json["inner_color"],
@@ -209,9 +228,17 @@ class Car {
     dailyPrice: json["daily_price"],
     oldMonthlyPrice: json["old_monthly_price"],
     monthlyPrice: json["monthly_price"],
+    weaklyPrice: json["weakly_price"],
+    oldWeaklyPrice: json["old_weakly_price"],
+    dailyKm: json["daily_km"],
+    weaklyKm: json["weakly_km"],
+    monthlyKm: json["monthly_km"],
+    deposit: json["deposit"],
+    engin: json["engine"],
+    kmPrice: json["km_price"],
     brandsApi: Brand.fromJson(json["brands_api"]),
     typesApi: Brand.fromJson(json["types_api"]),
-    bodiesApi: Brand.fromJson(json["bodies_api"]),
+    // bodiesApi: Brand.fromJson(json["bodies_api"]),
   );
 }
 

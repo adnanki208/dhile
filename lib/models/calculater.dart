@@ -5,16 +5,22 @@ CalculateModel calculateModelFromJson(String str) => CalculateModel.fromJson(jso
 String calculateToJson(Calculate data) => json.encode(data.toJson());
 
 class CalculateModel {
-  int discount;
-  int total;
-  int subTotal;
-  int vat;
+  num discount;
+  num total;
+  num subTotal;
+  num vat;
+  num rent;
+  num pick;
+  num drop;
 
   CalculateModel({
     required this.discount,
     required this.total,
     required this.subTotal,
     required this.vat,
+    required this.drop,
+    required this.pick,
+    required this.rent,
   });
 
   factory CalculateModel.fromJson(Map<String, dynamic> json) => CalculateModel(
@@ -22,6 +28,9 @@ class CalculateModel {
     total: json["total"],
     subTotal: json["sub-total"],
     vat: json["vat"],
+    drop: json["drop"],
+    pick: json["pick"],
+    rent: json["rent"],
   );
 }
 class Calculate {

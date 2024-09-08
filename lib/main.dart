@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:dhile/api/firebase_api.dart';
 import 'package:dhile/constant.dart';
 import 'package:dhile/controller/HomeControllerBinding.dart';
@@ -12,6 +13,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:page_transition/page_transition.dart';
@@ -108,6 +110,20 @@ class _MyAppState extends State<MyApp> {
             await FirebaseApi().initNotifications(firebaseMessaging);
             LocalNoti.initialize(flutterLocalNotificationsPlugin);
             setupInteractedMessage();
+            FlutterSecureStorage storage = const FlutterSecureStorage();
+            final String defaultLocale =
+            Platform.localeName.toString().substring(0, 2);
+            Locale localLang = await storage.read(key: 'lang') == null
+                ? defaultLocale == 'ar'
+                ? const Locale('ar', 'SA')
+                : const Locale('en', 'US')
+                : await storage.read(key: 'lang') == 'ar'
+                ? const Locale('ar', 'SA')
+                : const Locale('en', 'US');
+            Get.updateLocale(localLang);
+            await storage.deleteAll();
+            await storage.write(
+                key: "lang", value: localLang.toString().substring(0, 2));
 
             return const HomePage();
           },

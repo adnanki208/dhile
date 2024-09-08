@@ -93,7 +93,7 @@ class LocalNoti {
           )
     );
 
-    print(notificationModel.image);
+    // print(notificationModel.image);
     var not = NotificationDetails(
         android: androidPlatformChannelSpecifics,
         iOS: const DarwinNotificationDetails());

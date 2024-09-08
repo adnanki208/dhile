@@ -5,6 +5,7 @@ import 'package:dhile/models/home.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -25,6 +26,7 @@ class _BookPageState extends State<BookPage> {
   FocusNode phoneFocus = FocusNode();
   FocusNode emailFocus = FocusNode();
   FocusNode nameFocus = FocusNode();
+  FocusNode codeFocus = FocusNode();
 
   @override
   void initState() {
@@ -34,7 +36,7 @@ class _BookPageState extends State<BookPage> {
     });
     bookController.end(
         bookController.start.value.add(Duration(days: widget.car.minDays)));
-    bookController.calc();
+    // bookController.calc();
     Timer(
       const Duration(microseconds: 100),
       () {
@@ -162,6 +164,7 @@ class _BookPageState extends State<BookPage> {
                     return Form(
                       key: bookController.formKey,
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(
                             height: 15,
@@ -483,7 +486,61 @@ class _BookPageState extends State<BookPage> {
                           const SizedBox(
                             height: 20,
                           ),
-                       
+                          Text(
+                            'Discount Code'.tr,
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                                color: Constant.iconColor,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: TextFormField(
+                                  textInputAction: TextInputAction.next,
+                                  validator: (value) {
+                                    return null;
+                                  },
+                                  keyboardType: TextInputType.text,
+                                  focusNode: codeFocus,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  decoration: InputDecoration(
+                                      hintText: 'Discount Code'.tr,
+                                      border: const UnderlineInputBorder(
+                                          borderSide: BorderSide.none,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10))),
+                                      filled: true,
+                                      fillColor: const Color(0xffeeeeee)),
+                                  onSaved: (newValue) {
+                                    bookController.bookModel.update((val) {
+                                      val?.code = newValue;
+                                    });
+                                  },
+                                  onChanged: (value) {
+                                    bookController.CodeString.value=value;
+                                  },
+                                ),
+                              ),
+                              IconButton(
+                                  onPressed: () {
+                                    bookController.bookModel.update((val) {
+                                      val?.code = bookController.CodeString.value;
+                                    });
+                                    codeFocus.unfocus();
+                                   bookController.calc();
+                                  },
+                                  icon: const Icon(FontAwesomeIcons.check),
+                                color: Colors.black,
+                                style: ButtonStyle(backgroundColor:WidgetStateProperty.all(Constant.mainColor)),
+                              ),
+                            ],
+                          ),
                           const SizedBox(
                             height: 20,
                           ),
@@ -497,6 +554,85 @@ class _BookPageState extends State<BookPage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Rent'.tr,
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                          color: Constant.iconColor,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      bookController.rent.value,
+                                      style: TextStyle(
+                                          color: Constant.iconColor,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Pick Fee'.tr,
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                          color: Constant.iconColor,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      bookController.pickRent.value,
+                                      style: TextStyle(
+                                          color: Constant.iconColor,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Drop Fee'.tr,
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                          color: Constant.iconColor,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      bookController.dropRent.value,
+                                      style: TextStyle(
+                                          color: Constant.iconColor,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                const Divider(
+                                  color: Colors.grey,
+                                  height: 2,
+                                ),
                                 const SizedBox(
                                   height: 10,
                                 ),
@@ -635,6 +771,9 @@ class _BookPageState extends State<BookPage> {
                                       AutovalidateMode.onUserInteraction,
                                   textInputAction: TextInputAction.next,
                                   focusNode: nameFocus,
+                                  onTap: () {
+                                    bookController.calc2();
+                                  },
                                   onEditingComplete: () {
                                     nameFocus.unfocus();
                                     emailFocus.requestFocus();
@@ -799,23 +938,25 @@ class _BookPageState extends State<BookPage> {
                             Text('Accept'.tr,
                                 style: const TextStyle(fontSize: 16)),
                             const Text(' '),
-                            Text('Terms&Conditions'.tr,style: const TextStyle(fontSize: 16,color: Colors.blue),)
+                            Text(
+                              'Terms&Conditions'.tr,
+                              style: const TextStyle(
+                                  fontSize: 16, color: Colors.blue),
+                            )
                           ],
                         ),
                         onTap: () {
-
-
                           var document = 'TermContent'.tr;
 
                           Get.defaultDialog(
-                            content: Flexible(
-                              child: SingleChildScrollView(
-                                child: HtmlWidget(document,
-                                   ),
+                              content: Flexible(
+                                child: SingleChildScrollView(
+                                  child: HtmlWidget(
+                                    document,
+                                  ),
+                                ),
                               ),
-                            ),
-                            title: 'Terms&Conditions'.tr
-                          );
+                              title: 'Terms&Conditions'.tr);
                         }),
                   ]),
               Padding(

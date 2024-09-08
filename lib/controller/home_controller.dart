@@ -37,7 +37,7 @@ class HomeController extends GetxController {
   Rxn<CarsModel> cars = Rxn<CarsModel>();
   Rxn<BrandModel> brands = Rxn<BrandModel>();
   Rxn<TypeModel> types = Rxn<TypeModel>();
-  Rxn<BodyModel> bodies = Rxn<BodyModel>();
+  // Rxn<BodyModel> bodies = Rxn<BodyModel>();
   Rxn<FeaturesModel> features = Rxn<FeaturesModel>();
   MainController mainController = MainController();
 
@@ -59,7 +59,7 @@ class HomeController extends GetxController {
         currentRangeValues(RangeValues(0, maxPriceDaily.value.toDouble()));
         cars (CarsModel.fromJson(response.data));
         contacts = ContactModel.fromJson(response.data);
-        bodies(BodyModel.fromJson(response.data));
+        // bodies(BodyModel.fromJson(response.data));
         brands(BrandModel.fromJson(response.data));
         types(TypeModel.fromJson(response.data));
 
@@ -115,7 +115,7 @@ class HomeController extends GetxController {
       isLoading2(true);
       // isLoading3(true);
       late FilterModel filterModel = FilterModel(
-          carType: typeId.value.toString(), carBody: bodyId.value!=0?bodyId.toString():'', brands: brandsId, rentType: rentType.value=="daily"?'1':'0',minPrice:currentRangeValues.value.start.toString(),maxPrice: currentRangeValues.value.end.toString());
+          carType: typeId.value.toString(), brands: brandsId, rentType: rentType.value=="daily"?'1':'0',minPrice:currentRangeValues.value.start.toString(),maxPrice: currentRangeValues.value.end.toString());
 
       response = await ApiService().fetchFilter(filterModel);
       if (response.code != 1) {
@@ -243,7 +243,7 @@ class HomeController extends GetxController {
 
 
       late FilterModel filterModel = FilterModel(
-          carType: firstTypeId.value.toString(), carBody: null, brands: brandsId, rentType: '1',minPrice:currentRangeValues.value.start.toString(),maxPrice: currentRangeValues.value.end.toString());
+          carType: firstTypeId.value.toString(), brands: brandsId, rentType: '1',minPrice:currentRangeValues.value.start.toString(),maxPrice: currentRangeValues.value.end.toString());
       // print(filterModel.brands);
       response = await ApiService().fetchFilter(filterModel);
       // print(response.message);
@@ -296,7 +296,7 @@ class HomeController extends GetxController {
       }
 
       late FilterModel filterModel = FilterModel(
-          carType: typeId.value.toString(), carBody: bodyId.value.toString(), brands: brandsId, rentType: rentType.value=="daily"?'1':'0',minPrice:currentRangeValues.value.start.toString(),maxPrice: currentRangeValues.value.end.toString());
+          carType: typeId.value.toString(), brands: brandsId, rentType: rentType.value=="daily"?'1':'0',minPrice:currentRangeValues.value.start.toString(),maxPrice: currentRangeValues.value.end.toString());
       // print(filterModel.brands);
       response = await ApiService().fetchFilter(filterModel);
       // print(response.message);

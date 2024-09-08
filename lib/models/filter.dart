@@ -25,7 +25,7 @@ class FilterModel {
     String? minPrice;
     String? maxPrice;
     List<int> brands;
-    String? carBody;
+    // String? carBody;
 
     FilterModel({
         required this.carType,
@@ -33,7 +33,7 @@ class FilterModel {
          this.minPrice,
          this.maxPrice,
         required this.brands,
-         this.carBody,
+         // this.carBody,
     });
 
 
@@ -44,6 +44,6 @@ class FilterModel {
         "min_price": minPrice,
         "max_price": maxPrice,
         "brands": List<dynamic>.from(brands.map((x) => x)).toString(),
-        "car_body": carBody,
+        // "car_body": carBody,
     };
 }

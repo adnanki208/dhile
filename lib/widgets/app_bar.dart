@@ -126,95 +126,95 @@ class AppBarCustom extends StatelessWidget  implements PreferredSizeWidget{
 
                           color: Constant.iconColor),
                     ),
-                    const SizedBox(height: 10),
-                    SizedBox(
-                        height: 60,
-                        child: GridView.count(
-                          childAspectRatio: 0.6,
-                          crossAxisCount: 1,
-                          // itemCount: homeController.bodies.value!.body.length,
-                          scrollDirection: Axis.horizontal,
-                          children: List.generate(
-                            homeController.bodies.value!.carBody.length+1,
-                                (index) {
-                              if(index==0){
-                                return GestureDetector(
-                                  onTap: () {
-                                    homeController.changeBody(0);
-                                  },
-                                  child: Animate(
-                                    delay: 200.ms,
-                                    effects: const [FadeEffect()],
-                                    child: Card(
-                                      elevation: 0,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: const BorderRadius.all(
-                                          Radius.circular(10),
-                                        ),
-                                        side: homeController.bodyId == 0
-                                            ? BorderSide(
-                                            color: Constant.mainColor!,
-                                            width: 1.0)
-                                            : BorderSide(
-                                            color: Constant.iconColor!,
-                                            width: 1.0),
-                                      ),
-                                      color:Colors.white,
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Text('All'.tr,style: const TextStyle(fontSize: 16),textAlign: TextAlign.center),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              }else {
-                                index=index-1;
-                                return GestureDetector(
-                                  onTap: () {
-                                    homeController.changeBody(homeController
-                                        .bodies.value!.carBody[index].id);
-                                  },
-                                  child: Animate(
-                                    delay: 200.ms,
-                                    effects: const [FadeEffect()],
-                                    child: Card(
-                                      elevation: 0,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: const BorderRadius.all(
-                                          Radius.circular(10),
-                                        ),
-                                        side: homeController.bodyId ==
-                                            homeController.bodies.value!
-                                                .carBody[index].id
-                                            ? BorderSide(
-                                            color: Constant.mainColor!,
-                                            width: 1.0)
-                                            : BorderSide(
-                                            color: Constant.iconColor!,
-                                            width: 1.0),
-                                      ),
-                                      color: Colors.white,
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment
-                                            .center,
-                                        children: [
-                                          Text(homeController
-                                              .bodies
-                                              .value!
-                                              .carBody[index].title,
-                                              style: const TextStyle(fontSize: 16),
-                                              textAlign: TextAlign.center),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              }
-                            },
-                          ),
-                        )),
+                    // const SizedBox(height: 10),
+                    // SizedBox(
+                    //     height: 60,
+                    //     child: GridView.count(
+                    //       childAspectRatio: 0.6,
+                    //       crossAxisCount: 1,
+                    //       // itemCount: homeController.bodies.value!.body.length,
+                    //       scrollDirection: Axis.horizontal,
+                    //       children: List.generate(
+                    //         homeController.bodies.value!.carBody.length+1,
+                    //             (index) {
+                    //           if(index==0){
+                    //             return GestureDetector(
+                    //               onTap: () {
+                    //                 homeController.changeBody(0);
+                    //               },
+                    //               child: Animate(
+                    //                 delay: 200.ms,
+                    //                 effects: const [FadeEffect()],
+                    //                 child: Card(
+                    //                   elevation: 0,
+                    //                   shape: RoundedRectangleBorder(
+                    //                     borderRadius: const BorderRadius.all(
+                    //                       Radius.circular(10),
+                    //                     ),
+                    //                     side: homeController.bodyId == 0
+                    //                         ? BorderSide(
+                    //                         color: Constant.mainColor!,
+                    //                         width: 1.0)
+                    //                         : BorderSide(
+                    //                         color: Constant.iconColor!,
+                    //                         width: 1.0),
+                    //                   ),
+                    //                   color:Colors.white,
+                    //                   child: Column(
+                    //                     mainAxisAlignment: MainAxisAlignment.center,
+                    //                     children: [
+                    //                       Text('All'.tr,style: const TextStyle(fontSize: 16),textAlign: TextAlign.center),
+                    //                     ],
+                    //                   ),
+                    //                 ),
+                    //               ),
+                    //             );
+                    //           }else {
+                    //             index=index-1;
+                    //             return GestureDetector(
+                    //               onTap: () {
+                    //                 homeController.changeBody(homeController
+                    //                     .bodies.value!.carBody[index].id);
+                    //               },
+                    //               child: Animate(
+                    //                 delay: 200.ms,
+                    //                 effects: const [FadeEffect()],
+                    //                 child: Card(
+                    //                   elevation: 0,
+                    //                   shape: RoundedRectangleBorder(
+                    //                     borderRadius: const BorderRadius.all(
+                    //                       Radius.circular(10),
+                    //                     ),
+                    //                     side: homeController.bodyId ==
+                    //                         homeController.bodies.value!
+                    //                             .carBody[index].id
+                    //                         ? BorderSide(
+                    //                         color: Constant.mainColor!,
+                    //                         width: 1.0)
+                    //                         : BorderSide(
+                    //                         color: Constant.iconColor!,
+                    //                         width: 1.0),
+                    //                   ),
+                    //                   color: Colors.white,
+                    //                   child: Column(
+                    //                     mainAxisAlignment: MainAxisAlignment
+                    //                         .center,
+                    //                     children: [
+                    //                       Text(homeController
+                    //                           .bodies
+                    //                           .value!
+                    //                           .carBody[index].title,
+                    //                           style: const TextStyle(fontSize: 16),
+                    //                           textAlign: TextAlign.center),
+                    //                     ],
+                    //                   ),
+                    //                 ),
+                    //               ),
+                    //             );
+                    //           }
+                    //         },
+                    //       ),
+                    //     )),
 
 
                     const SizedBox(height: 20),

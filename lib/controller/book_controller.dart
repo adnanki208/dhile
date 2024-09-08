@@ -25,6 +25,10 @@ class BookController extends GetxController{
   Rx<String> subTotal=''.obs;
   Rx<String> vat=''.obs;
   Rx<String> discount=''.obs;
+  Rx<String> rent=''.obs;
+  Rx<String> dropRent=''.obs;
+  Rx<String> pickRent=''.obs;
+  Rx<String> CodeString=''.obs;
 
 
   final formKey = GlobalKey<FormState>();
@@ -58,6 +62,9 @@ class BookController extends GetxController{
       subTotal('');
       vat('');
       discount('');
+      rent('');
+      pickRent('');
+      dropRent('');
 
       bookModel.update((val) {
         val?.rentalType=0;
@@ -78,7 +85,7 @@ class BookController extends GetxController{
       });
       start(DateTime.now());
       end(DateTime.now().add(Duration(days: minDays.value)));
-      calc();
+      // calc();
     } catch (e) {
       if (kDebugMode) {
         print(e);
@@ -96,12 +103,52 @@ class BookController extends GetxController{
         subTotal('');
         vat('');
         discount('');
+        rent('');
+        pickRent('');
+        dropRent('');
         DateTime fromDate=DateTime(start.value.year,start.value.month,start.value.day,);
         DateTime toDate=DateTime(end.value.year,end.value.month,end.value.day,);
         // print(end.value);
         calculate.update((val) {
           val?.fromDate = fromDate.toString();
           val?.toDate = toDate.toString();
+          val?.code = CodeString.value;
+        });
+          response = await ApiService().calcSubmit(calculate());
+
+          if(response.code==1){
+            // Get.offAllNamed("/thank");
+            calculateModel(CalculateModel.fromJson(response.data));
+            // print(calculateModel.value!.total);
+            total(calculateModel.value?.total.toString());
+            subTotal(calculateModel.value?.subTotal.toString());
+            vat(calculateModel.value?.vat.toString());
+            discount(calculateModel.value?.discount.toString());
+            rent(calculateModel.value?.rent.toString());
+            pickRent(calculateModel.value?.pick.toString());
+            dropRent(calculateModel.value?.drop.toString());
+          }
+
+
+      } catch(e){
+        if (kDebugMode) {
+          print(e);
+        }
+      }
+
+  }
+  Future<void> calc2()  async {
+
+      try {
+
+
+        DateTime fromDate=DateTime(start.value.year,start.value.month,start.value.day,);
+        DateTime toDate=DateTime(end.value.year,end.value.month,end.value.day,);
+        // print(end.value);
+        calculate.update((val) {
+          val?.fromDate = fromDate.toString();
+          val?.toDate = toDate.toString();
+          val?.code = CodeString.value;
         });
 
           response = await ApiService().calcSubmit(calculate());
@@ -114,6 +161,9 @@ class BookController extends GetxController{
             subTotal(calculateModel.value?.subTotal.toString());
             vat(calculateModel.value?.vat.toString());
             discount(calculateModel.value?.discount.toString());
+            rent(calculateModel.value?.rent.toString());
+            pickRent(calculateModel.value?.pick.toString());
+            dropRent(calculateModel.value?.drop.toString());
           }
 
 
@@ -130,6 +180,7 @@ class BookController extends GetxController{
 
 
           response = await ApiService().fetchArea();
+
 
           if(response.code==1){
             areaModel(AreaModel.fromJson(response.data));
@@ -166,6 +217,7 @@ class BookController extends GetxController{
           val?.drop=calculate.value.drop;
           val?.areaPick=calculate.value.areaPick;
           val?.areaDrop=calculate.value.areaDrop;
+          val?.code = CodeString.value;
         });
 
         if(toDate.isBefore(fromDate) || toDate.isAtSameMomentAs(fromDate)){
