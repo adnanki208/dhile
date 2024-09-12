@@ -166,6 +166,7 @@ class CarCard extends StatelessWidget {
                                   const SizedBox(
                                     width: 5,
                                   ),
+                                  if(homeController.cars.value!.cars[index].year!=null)
                                   Text(
                                     homeController.cars.value!.cars[index].year
                                         .toString(),

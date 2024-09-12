@@ -142,7 +142,7 @@ class Car {
   String? offer;
   String description;
   String? note;
-  int year;
+  int? year;
   String innerColor;
   String outerColor;
   int seats;
@@ -177,7 +177,7 @@ class Car {
     required this.minDays,
      this.offer,
     required this.description,
-    required this.year,
+    this.year,
     required this.innerColor,
     required this.outerColor,
     required this.seats,
