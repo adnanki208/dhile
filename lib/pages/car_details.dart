@@ -110,10 +110,11 @@ class _CarDetailsPageState extends State<CarDetailsPage> {
                                   ? 3
                                   : 4.5,
                           slideIndicator: CircularSlideIndicator(
-                              currentIndicatorColor: Constant.mainColor,
-                              indicatorBackgroundColor: Constant.mainColorOp,
+                            slideIndicatorOptions: SlideIndicatorOptions(
+                              currentIndicatorColor: Constant.mainColor!,
+                              indicatorBackgroundColor: Constant.mainColorOp!,
                               indicatorRadius: 4,
-                              itemSpacing: 12),
+                              itemSpacing: 12),),
                         ),
                         items: image.map((e) {
                           return Builder(builder: (BuildContext context) {
@@ -183,6 +184,7 @@ class _CarDetailsPageState extends State<CarDetailsPage> {
                             const SizedBox(
                               width: 10,
                             ),
+                            if(widget.car.year!=null)
                             Container(
                               padding: const EdgeInsets.only(
                                   right: 15, left: 15, bottom: 5),
@@ -757,6 +759,69 @@ class _CarDetailsPageState extends State<CarDetailsPage> {
                             ),
                           ),
                         if (widget.car.offer != null)
+                          const SizedBox(
+                            height: 15,
+                          ),
+
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(children: [
+                                    Row(
+                                      children: [
+                                        const Icon(
+                                          FontAwesomeIcons.check,
+                                          color: Colors.green,
+                                          size: 18,
+                                        ),
+                                        const SizedBox(width: 10,),
+                                        Text('Insurance Included'.tr , style: const TextStyle(
+                                            fontWeight: FontWeight.bold
+                                        ),),
+
+                                      ],
+                                    ),
+                                  ],),
+                                  Column(children: [
+                                    Row(
+                                      children: [
+                                        const Icon(
+                                          FontAwesomeIcons.check,
+                                          color: Colors.green,
+                                          size: 18,
+                                        ),
+                                        const SizedBox(width: 10,),
+                                        Text('${'Deposit'.tr} : ${widget.car.deposit} ${'AED'.tr}', style: const TextStyle(
+                                            fontWeight: FontWeight.bold
+                                        ) )
+
+                                      ],
+                                    ),
+                                  ],),
+
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  const Icon(
+                                    FontAwesomeIcons.check,
+                                    color: Colors.green,
+                                    size: 18,
+                                  ),
+                                  const SizedBox(width: 10,),
+                                  Text('${'Minimum Days For Rent'.tr} : ${widget.car.minDays}', style: const TextStyle(
+                                      fontWeight: FontWeight.bold
+                                  ) ),
+
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
                           const SizedBox(
                             height: 15,
                           ),

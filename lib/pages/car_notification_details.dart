@@ -133,11 +133,12 @@ class _CarNotificationDetailsPageState
                                         ? 3
                                         : 4.5,
                                     slideIndicator: CircularSlideIndicator(
-                                        currentIndicatorColor: Constant.mainColor,
+                                      slideIndicatorOptions: SlideIndicatorOptions(
+                                        currentIndicatorColor: Constant.mainColor!,
                                         indicatorBackgroundColor:
-                                        Constant.mainColorOp,
+                                        Constant.mainColorOp!,
                                         indicatorRadius: 4,
-                                        itemSpacing: 12),
+                                        itemSpacing: 12)),
                                   ),
                                   items: image.map((e) {
                                     return Builder(builder: (BuildContext context) {

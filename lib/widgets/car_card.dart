@@ -22,35 +22,41 @@ class CarCard extends StatelessWidget {
       physics: shrinkWrap == true
           ? const NeverScrollableScrollPhysics()
           : const AlwaysScrollableScrollPhysics(),
-      crossAxisCount: MediaQuery.of(context).size.width <= 600
+      crossAxisCount: MediaQuery
+          .of(context)
+          .size
+          .width <= 600
           ? 1
-          : MediaQuery.of(context).size.width <= 1200
-              ? 2
-              : 3,
+          : MediaQuery
+          .of(context)
+          .size
+          .width <= 1200
+          ? 2
+          : 3,
       mainAxisSpacing: 15,
       crossAxisSpacing: 15,
       itemCount: homeController.cars.value!.cars.length,
       itemBuilder: (context, index) {
         List<String> image =
-            homeController.cars.value!.cars[index].imgs.split(',');
+        homeController.cars.value!.cars[index].imgs.split(',');
         int oldDaily = 0;
         int oldMonthly = 0;
 
         if (homeController.cars.value!.cars[index].oldDailyPrice != null) {
           oldDaily = (((homeController.cars.value!.cars[index].oldDailyPrice! -
-                          homeController.cars.value!.cars[index].dailyPrice!) /
-                      homeController.cars.value!.cars[index].oldDailyPrice!) *
-                  100)
+              homeController.cars.value!.cars[index].dailyPrice!) /
+              homeController.cars.value!.cars[index].oldDailyPrice!) *
+              100)
               .ceil();
         }
         if (homeController.cars.value!.cars[index].oldMonthlyPrice != null &&
             homeController.cars.value!.cars[index].monthlyPrice != null) {
           oldMonthly = (((homeController
-                              .cars.value!.cars[index].oldMonthlyPrice! -
-                          homeController
-                              .cars.value!.cars[index].monthlyPrice!) /
-                      homeController.cars.value!.cars[index].oldMonthlyPrice!) *
-                  100)
+              .cars.value!.cars[index].oldMonthlyPrice! -
+              homeController
+                  .cars.value!.cars[index].monthlyPrice!) /
+              homeController.cars.value!.cars[index].oldMonthlyPrice!) *
+              100)
               .ceil();
         }
 
@@ -83,10 +89,11 @@ class CarCard extends StatelessWidget {
                           children: [
                             ClipRRect(
                               borderRadius:
-                                  const BorderRadius.all(Radius.circular(10)),
+                              const BorderRadius.all(Radius.circular(10)),
                               child: Hero(
                                 tag:
-                                    'car${homeController.cars.value!.cars[index].id}',
+                                'car${homeController.cars.value!.cars[index]
+                                    .id}',
                                 child: FlutterCarousel(
                                     options: CarouselOptions(
                                       enableInfiniteScroll: true,
@@ -95,39 +102,49 @@ class CarCard extends StatelessWidget {
                                       viewportFraction: 1.0,
                                       aspectRatio: 1.5,
                                       slideIndicator: CircularSlideIndicator(
-                                          currentIndicatorColor: Constant.mainColor,
-                                          indicatorBackgroundColor:
-                                              Constant.mainColorOp,
-                                          indicatorRadius: 4,
-                                          itemSpacing: 12),
+                                          slideIndicatorOptions: SlideIndicatorOptions(
+                                              currentIndicatorColor: Constant
+                                                  .mainColor!,
+                                              indicatorBackgroundColor:
+                                              Constant.mainColorOp!,
+                                              indicatorRadius: 4,
+                                              itemSpacing: 12)),
                                     ),
                                     items: image.map((e) {
                                       return Builder(
                                           builder: (BuildContext context) {
-                                        return FadeInImage.assetNetwork(
-                                            placeholder:
+                                            return FadeInImage.assetNetwork(
+                                                placeholder:
                                                 'assets/imgs/car-placeholder.png',
-                                            image: Constant.domain + e,
-                                            fit: BoxFit.cover);
-                                      });
+                                                image: Constant.domain + e,
+                                                fit: BoxFit.cover);
+                                          });
                                     }).toList()),
                               ),
                             ),
-                            if (homeController.cars.value!.cars[index].offer != null)
+                            if (homeController.cars.value!.cars[index].offer !=
+                                null)
                               Container(
                                 padding: const EdgeInsets.all(5),
                                 decoration: const BoxDecoration(
                                   color: Colors.yellow,
                                   borderRadius:
-                                  BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10)),
+                                  BorderRadius.only(
+                                      topLeft: Radius.circular(10),
+                                      topRight: Radius.circular(10)),
 
                                 ),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsets.only(bottom: 5.0),
-                                      child: Text(homeController.cars.value!.cars[index].offer!,style: const TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
+                                      padding: const EdgeInsets.only(
+                                          bottom: 5.0),
+                                      child: Text(
+                                        homeController.cars.value!.cars[index]
+                                            .offer!, style: const TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),),
                                     ),
                                   ],
                                 ),
@@ -166,14 +183,16 @@ class CarCard extends StatelessWidget {
                                   const SizedBox(
                                     width: 5,
                                   ),
-                                  if(homeController.cars.value!.cars[index].year!=null)
-                                  Text(
-                                    homeController.cars.value!.cars[index].year
-                                        .toString(),
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        color: Constant.iconColor),
-                                  ).animate(delay: 500.ms).slideX()
+                                  if(homeController.cars.value!.cars[index]
+                                      .year != null)
+                                    Text(
+                                      homeController.cars.value!.cars[index]
+                                          .year
+                                          .toString(),
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          color: Constant.iconColor),
+                                    ).animate(delay: 500.ms).slideX()
                                 ],
                               ),
                             ),
@@ -184,7 +203,8 @@ class CarCard extends StatelessWidget {
                               width: 40,
                               child: Hero(
                                 tag:
-                                    'brand${homeController.cars.value!.cars[index].id}',
+                                'brand${homeController.cars.value!.cars[index]
+                                    .id}',
                                 child: Image.network(
                                     Constant.domain +
                                         homeController.cars.value!.cars[index]
@@ -199,29 +219,33 @@ class CarCard extends StatelessWidget {
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              if (homeController.cars.value!.cars[index].dailyPrice !=null)
+                              if (homeController.cars.value!.cars[index]
+                                  .dailyPrice != null)
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     oldDaily != 0
                                         ? Text(
-                                            '${'AED'.tr} ${homeController.cars.value!.cars[index].oldDailyPrice}',
-                                            style: const TextStyle(
-                                                decoration:
-                                                    TextDecoration.lineThrough,
-                                                color: Color(0xffFF4B4B),
-                                                decorationColor:
-                                                    Color(0xffFF4B4B)),
-                                          )
+                                      '${'AED'.tr} ${homeController.cars.value!
+                                          .cars[index].oldDailyPrice}',
+                                      style: const TextStyle(
+                                          decoration:
+                                          TextDecoration.lineThrough,
+                                          color: Color(0xffFF4B4B),
+                                          decorationColor:
+                                          Color(0xffFF4B4B)),
+                                    )
                                         : const SizedBox(
-                                            height: 20,
-                                          ),
+                                      height: 20,
+                                    ),
                                     Row(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.end,
+                                      CrossAxisAlignment.end,
                                       children: [
                                         Text(
-                                            '${homeController.cars.value!.cars[index].dailyPrice.toString()}',
+                                            '${homeController.cars.value!
+                                                .cars[index].dailyPrice
+                                                .toString()}',
                                             style: const TextStyle(
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.bold,
@@ -250,7 +274,9 @@ class CarCard extends StatelessWidget {
                                           ),
                                         ),
                                         Text(
-                                            ' ${homeController.cars.value!.cars[index].dailyKm} ${'Km'.tr}',
+                                            ' ${homeController.cars.value!
+                                                .cars[index].dailyKm} ${'Km'
+                                                .tr}',
                                             style: TextStyle(
                                                 color: Constant.mainColor,
                                                 fontWeight: FontWeight.bold,
@@ -265,9 +291,11 @@ class CarCard extends StatelessWidget {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    homeController.cars.value!.cars[index].oldWeaklyPrice != 0
-                                        ?  Text(
-                                      '${'AED'.tr} ${homeController.cars.value!.cars[index].oldWeaklyPrice}',
+                                    homeController.cars.value!.cars[index]
+                                        .oldWeaklyPrice != 0
+                                        ? Text(
+                                      '${'AED'.tr} ${homeController.cars.value!
+                                          .cars[index].oldWeaklyPrice}',
                                       style: const TextStyle(
                                           decoration:
                                           TextDecoration.lineThrough,
@@ -279,7 +307,8 @@ class CarCard extends StatelessWidget {
                                       height: 20,
                                     ),
                                     Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment
+                                          .start,
                                       children: [
                                         Row(
                                           crossAxisAlignment:
@@ -306,7 +335,8 @@ class CarCard extends StatelessWidget {
                                           ],
                                         ),
                                         Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment
+                                              .start,
                                           children: [
                                             Padding(
                                               padding: const EdgeInsets.only(
@@ -318,7 +348,9 @@ class CarCard extends StatelessWidget {
                                               ),
                                             ),
                                             Text(
-                                                ' ${homeController.cars.value!.cars[index].weaklyPrice} ${'Km'.tr}',
+                                                ' ${homeController.cars.value!
+                                                    .cars[index]
+                                                    .weaklyPrice} ${'Km'.tr}',
                                                 style: TextStyle(
                                                     color: Constant.mainColor,
                                                     fontWeight: FontWeight.bold,
@@ -330,14 +362,15 @@ class CarCard extends StatelessWidget {
                                   ],
                                 ),
                               if (homeController
-                                      .cars.value!.cars[index].monthlyPrice !=
+                                  .cars.value!.cars[index].monthlyPrice !=
                                   null)
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     oldMonthly != 0
-                                        ?  Text(
-                                      '${'AED'.tr} ${homeController.cars.value!.cars[index].oldMonthlyPrice}',
+                                        ? Text(
+                                      '${'AED'.tr} ${homeController.cars.value!
+                                          .cars[index].oldMonthlyPrice}',
                                       style: const TextStyle(
                                           decoration:
                                           TextDecoration.lineThrough,
@@ -346,14 +379,15 @@ class CarCard extends StatelessWidget {
                                           Color(0xffFF4B4B)),
                                     )
                                         : const SizedBox(
-                                            height: 20,
-                                          ),
+                                      height: 20,
+                                    ),
                                     Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment
+                                          .start,
                                       children: [
                                         Row(
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.end,
+                                          CrossAxisAlignment.end,
                                           children: [
                                             Text(
                                                 homeController.cars.value!
@@ -376,7 +410,8 @@ class CarCard extends StatelessWidget {
                                           ],
                                         ),
                                         Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment
+                                              .start,
                                           children: [
                                             Padding(
                                               padding: const EdgeInsets.only(
@@ -388,7 +423,9 @@ class CarCard extends StatelessWidget {
                                               ),
                                             ),
                                             Text(
-                                                ' ${homeController.cars.value!.cars[index].dailyKm} ${'Km'.tr}',
+                                                ' ${homeController.cars.value!
+                                                    .cars[index].dailyKm} ${'Km'
+                                                    .tr}',
                                                 style: TextStyle(
                                                     color: Constant.mainColor,
                                                     fontWeight: FontWeight.bold,
@@ -418,13 +455,14 @@ class CarCard extends StatelessWidget {
                           child: IntrinsicHeight(
                             child: Padding(
                               padding:
-                                  const EdgeInsets.only(top: 10, bottom: 14),
+                              const EdgeInsets.only(top: 10, bottom: 14),
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                                MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Text(
-                                    '${homeController.cars.value!.cars[index].seats.toString()} ${'seats'.tr}',
+                                    '${homeController.cars.value!.cars[index]
+                                        .seats.toString()} ${'seats'.tr}',
                                     style: TextStyle(
                                         color: Constant.iconColor,
                                         fontSize: 15),
@@ -432,20 +470,20 @@ class CarCard extends StatelessWidget {
                                   const VerticalDivider(
                                       color: Colors.grey, width: 2),
                                   homeController.cars.value!.cars[index]
-                                              .transmission ==
-                                          0
+                                      .transmission ==
+                                      0
                                       ? Text(
-                                          'manual'.tr,
-                                          style: TextStyle(
-                                              color: Constant.iconColor,
-                                              fontSize: 15),
-                                        )
+                                    'manual'.tr,
+                                    style: TextStyle(
+                                        color: Constant.iconColor,
+                                        fontSize: 15),
+                                  )
                                       : Text(
-                                          'auto'.tr,
-                                          style: TextStyle(
-                                              color: Constant.iconColor,
-                                              fontSize: 15),
-                                        ),
+                                    'auto'.tr,
+                                    style: TextStyle(
+                                        color: Constant.iconColor,
+                                        fontSize: 15),
+                                  ),
                                   const VerticalDivider(
                                       color: Colors.grey, width: 2),
                                   // Text(
@@ -474,6 +512,65 @@ class CarCard extends StatelessWidget {
                         const SizedBox(
                           height: 20,
                         ),
+                        Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(children: [
+                                  Row(
+                                    children: [
+                                      const Icon(
+                                        FontAwesomeIcons.check,
+                                        color: Colors.green,
+                                        size: 18,
+                                      ),
+                                      const SizedBox(width: 10,),
+                                      Text('Insurance Included'.tr , style: const TextStyle(
+                                        fontWeight: FontWeight.bold
+                                      ),),
+
+                                    ],
+                                  ),
+                                ],),
+                                Column(children: [
+                                  Row(
+                                    children: [
+                                      const Icon(
+                                        FontAwesomeIcons.check,
+                                        color: Colors.green,
+                                        size: 18,
+                                      ),
+                                      const SizedBox(width: 10,),
+                                      Text('${'Deposit'.tr} : ${homeController.cars.value!.cars[index].deposit} ${'AED'.tr}', style: const TextStyle(
+                                          fontWeight: FontWeight.bold
+                                      ) )
+
+                                    ],
+                                  ),
+                                ],),
+
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                const Icon(
+                                  FontAwesomeIcons.check,
+                                  color: Colors.green,
+                                  size: 18,
+                                ),
+                                const SizedBox(width: 10,),
+                                Text('${'Minimum Days For Rent'.tr} : ${homeController.cars.value!.cars[index].minDays}', style: const TextStyle(
+                                    fontWeight: FontWeight.bold
+                                ) ),
+
+                              ],
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -485,23 +582,23 @@ class CarCard extends StatelessWidget {
                                   },
                                   style: ButtonStyle(
                                       padding:
-                                          MaterialStateProperty.all<EdgeInsets>(
-                                              EdgeInsets.zero),
+                                      MaterialStateProperty.all<EdgeInsets>(
+                                          EdgeInsets.zero),
                                       backgroundColor:
-                                          MaterialStateProperty.all(
-                                              const Color(0xffB30000)),
+                                      MaterialStateProperty.all(
+                                          const Color(0xffB30000)),
                                       shape: MaterialStateProperty.all<
-                                              RoundedRectangleBorder>(
+                                          RoundedRectangleBorder>(
                                           const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(50)),
-                                      ))),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(50)),
+                                          ))),
                                   child: Animate(
                                     onPlay: (controller) => controller.repeat(),
                                     effects: [ShakeEffect(delay: 3000.ms)],
                                     child: const Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      MainAxisAlignment.center,
                                       children: [
                                         Icon(
                                           Icons.phone_in_talk,
@@ -517,21 +614,23 @@ class CarCard extends StatelessWidget {
                               child: TextButton(
                                   onPressed: () {
                                     launchUrlString(
-                                        '${homeController.whats!} (${homeController.cars.value!.cars[index].model})');
+                                        '${homeController
+                                            .whats!} (${homeController.cars
+                                            .value!.cars[index].model})');
                                   },
                                   style: ButtonStyle(
                                       padding:
-                                          MaterialStateProperty.all<EdgeInsets>(
-                                              EdgeInsets.zero),
+                                      MaterialStateProperty.all<EdgeInsets>(
+                                          EdgeInsets.zero),
                                       backgroundColor:
-                                          MaterialStateProperty.all(
-                                              const Color(0Xff176322)),
+                                      MaterialStateProperty.all(
+                                          const Color(0Xff176322)),
                                       shape: MaterialStateProperty.all<
-                                              RoundedRectangleBorder>(
+                                          RoundedRectangleBorder>(
                                           const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(50)),
-                                      ))),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(50)),
+                                          ))),
                                   child: const Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -553,21 +652,21 @@ class CarCard extends StatelessWidget {
                                   },
                                   style: ButtonStyle(
                                       padding:
-                                          MaterialStateProperty.all<EdgeInsets>(
-                                              const EdgeInsets.only(
-                                                  top: 0,
-                                                  right: 40,
-                                                  left: 40,
-                                                  bottom: 5)),
+                                      MaterialStateProperty.all<EdgeInsets>(
+                                          const EdgeInsets.only(
+                                              top: 0,
+                                              right: 40,
+                                              left: 40,
+                                              bottom: 5)),
                                       backgroundColor:
-                                          MaterialStateProperty.all(
-                                              Colors.black),
+                                      MaterialStateProperty.all(
+                                          Colors.black),
                                       shape: MaterialStateProperty.all<
-                                              RoundedRectangleBorder>(
+                                          RoundedRectangleBorder>(
                                           const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(50)),
-                                      ))),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(50)),
+                                          ))),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
